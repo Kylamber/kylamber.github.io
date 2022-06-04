@@ -146,7 +146,7 @@ anim
 
 The end result looks something like this
 
-![image](https://user-images.githubusercontent.com/32596839/171991992-cbd2d808-bc8b-450e-8460-2b122542ead4.png)
+![string_sim_20L](https://user-images.githubusercontent.com/32596839/171992081-a20e0ced-f200-4880-8964-9eb99dab2448.gif)
 
 ### References
 
