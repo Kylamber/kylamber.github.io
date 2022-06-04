@@ -27,6 +27,14 @@ m = 1.5/n_loads # kg
 a = 2/n_loads # m
 ```
 
+We'll use SciPy to solve our differential equation numerically. Before that, a bit of imports.
+
+```python
+from scipy.integrate import solve_ivp
+import matplotlib.pyplot as plt
+import numpy as np
+```
+
 Our input to the function is $[y_0, \dot{y_0}, y_1, \dot{y_1}, \cdots, y_n, \dot{y_n}]$, and that is why the output is $[\dot{y_0}, \ddot{y_0}, \dot{y_1}, \ddot{y_1}, \cdots, \dot{y_n}, \ddot{y_n}]$.
 
 Say that we have 4 loads, or in other words 2 moving loads. The differential equation will be
