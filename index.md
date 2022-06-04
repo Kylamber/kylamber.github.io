@@ -146,7 +146,7 @@ anim
 
 The end result looks something like this
 
-https://user-images.githubusercontent.com/32596839/171991628-ace24c2d-7fb5-45b2-be48-eb51a61b72eb.mp4
+![image](https://user-images.githubusercontent.com/32596839/171991992-cbd2d808-bc8b-450e-8460-2b122542ead4.png)
 
 ### References
 
