@@ -1,0 +1,21 @@
+(() => {
+  // <stdin>
+  document.addEventListener("DOMContentLoaded", () => {
+    const checker = document.getElementById("theme-switcher");
+    const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+    let darkModeChecked = false;
+    if (prefersDarkScheme.matches) {
+      darkModeChecked = true;
+    }
+    const currentTheme = localStorage.getItem("theme");
+    if (currentTheme == "dark") {
+      darkModeChecked = true;
+    } else if (currentTheme == "light") {
+      darkModeChecked = false;
+    }
+    checker.checked = darkModeChecked;
+    checker.addEventListener("input", function() {
+      localStorage.setItem("theme", checker.checked ? "dark" : "light");
+    });
+  });
+})();

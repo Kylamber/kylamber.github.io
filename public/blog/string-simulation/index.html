@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>String Simulation | I&#39;m Adrian, FYI</title>
+
+    <link rel="stylesheet" href="/css/main.css">
+
+
+      <script src="/js/main.js"></script>
+
+
+
+	
+		<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+  integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+  crossorigin="anonymous"
+>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+  integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+  crossorigin="anonymous">
+</script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
+  integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh"
+  crossorigin="anonymous"
+  onload="renderMathInElement(document.body);">
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: '\\[', right: '\\]', display: true},   
+        {left: '$$', right: '$$', display: true},     
+        {left: '\\(', right: '\\)', display: false},  
+      ],
+      throwOnError : false
+    });
+  });
+</script>
+
+	
+
+</head>
+<body>
+	<input type="checkbox" id="theme-switcher">
+	<input type="checkbox" id="toc-opener">
+	<input type="checkbox" id="blogs-opener">
+
+	<div id="page">
+		<div class="content"> 
+			<label for="theme-switcher" id="theme-switcher-label"></label>
+			<label for="toc-opener" id="toc-opener-label"></label>
+			<label for="blogs-opener" id="blogs-opener-label"></label>
+			<main>
+				
+	<h1>String Simulation</h1>
+
+	
+	
+	<time datetime="2022-06-05T22:55:22&#43;07:00">June 5, 2022</time>
+
+	<p>Say you have a load on a massless string placed somewhat like this.</p>
+<p><img src="https://user-images.githubusercontent.com/32596839/171990327-482a552d-b665-4383-85a7-2df4867e02c0.png" alt="image"></p>
+<p>Fig 1. Displacements of three masses on a loaded string under tension T. Sourced from [1, p. 91].</p>
+<p>The differential equation for each load is</p>
+<p>\[ \ddot{y_r} = \frac{T}{ma}(y_{r-1}-2y_r+y_{r+1}) \]</p>
+<p>Where \( m \) is the mass of the load which is the same and \( a \) is the horizontal distance from each load [1, p. 91].</p>
+<blockquote>
+<p>I don&rsquo;t know whether the \( m \) is actually \( m_r \) so that it doesn&rsquo;t matter whether the loads&rsquo; masses are different or must it be uniform.</p></blockquote>
+<p>Say that we have \( n \) loads. If we fix the \( 0 \)th and \( n \)th load at \( y = 0 \) and \( \dot{y} = 0 \), we have a &ldquo;string&rdquo; that is tied at both ends. When \( n = 0 \) there are no moving loads, the same goes for \( n = 1 \) and \( n = 2 \). There is one moving load when \( n = 3 \) and two moving loads when \( n = 4 \). The number of moving loads is then defined as \( n - 2 \) when \( n \geq 3 \).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>moving_loads <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
+</span></span><span style="display:flex;"><span>n_loads <span style="color:#f92672">=</span> moving_loads<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>T <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># N</span>
+</span></span><span style="display:flex;"><span>m <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.5</span><span style="color:#f92672">/</span>n_loads <span style="color:#75715e"># kg</span>
+</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">/</span>n_loads <span style="color:#75715e"># m</span>
+</span></span></code></pre></div><p>We&rsquo;ll use SciPy to solve our differential equation numerically. Before that, a bit of imports.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> scipy.integrate <span style="color:#f92672">import</span> solve_ivp
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span></code></pre></div><p>Our input to the function is \( [y_0, \dot{y_0}, y_1, \dot{y_1}, \cdots, y_n, \dot{y_n}] \), and that is why the output is \( [\dot{y_0}, \ddot{y_0}, \dot{y_1}, \ddot{y_1}, \cdots, \dot{y_n}, \ddot{y_n}] \).</p>
+<p>Say that we have 4 loads, or in other words 2 moving loads. The differential equation will be</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">diff</span>(t, y):
+</span></span><span style="display:flex;"><span>    n_yp <span style="color:#f92672">=</span> n_loads<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span> <span style="color:#75715e"># there are n amounts of y dot and y double dots</span>
+</span></span><span style="display:flex;"><span>    yp <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(n_yp) <span style="color:#75715e"># place to store the differential equations (yp as in y prime)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    yp[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> y[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>    yp[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    yp[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> y[<span style="color:#ae81ff">3</span>]
+</span></span><span style="display:flex;"><span>    yp[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> T<span style="color:#f92672">/</span>(m<span style="color:#f92672">*</span>a) <span style="color:#f92672">*</span> (y[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>y[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">+</span> y[<span style="color:#ae81ff">4</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    yp[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> y[<span style="color:#ae81ff">5</span>]
+</span></span><span style="display:flex;"><span>    yp[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> T<span style="color:#f92672">/</span>(m<span style="color:#f92672">*</span>a) <span style="color:#f92672">*</span> (y[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>y[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">+</span> y[<span style="color:#ae81ff">6</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    yp[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">=</span> y[<span style="color:#ae81ff">7</span>]
+</span></span><span style="display:flex;"><span>    yp[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> yp
+</span></span></code></pre></div><p>From that, we can see the generalized version using <code>for</code> loops is</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">diff</span>(t, y):
+</span></span><span style="display:flex;"><span>    n_ya <span style="color:#f92672">=</span> n_loads<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span> <span style="color:#75715e"># there are n amounts of y dot and y double dots</span>
+</span></span><span style="display:flex;"><span>    ya <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(n_ya)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, n_ya, <span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>        ya[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> y[i]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>, n_ya<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>        ya[i] <span style="color:#f92672">=</span> T<span style="color:#f92672">/</span>(m<span style="color:#f92672">*</span>a) <span style="color:#f92672">*</span> (y[i<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>y[i<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>] <span style="color:#f92672">+</span> y[i<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>])
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    ya[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    ya[n_ya<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array(ya)
+</span></span></code></pre></div><p>Before solving the differential equation, we need initial values. Starting simple, we can just set the first moving load to some height or change its velocity to a non zero velocity to see what happens. After that we can set the initial values to one sine wave to see a standing wave, this is one of its normal modes.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 1 Full Sine Wave</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span>, points<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>    inits[i] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sin(np<span style="color:#f92672">.</span>pi<span style="color:#f92672">/</span>points<span style="color:#f92672">*</span>i)
+</span></span></code></pre></div><p>Solving the differential equation using SciPy, we have</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>time <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>inits <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n_loads<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>)]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1 Full Sine Wave</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span>, points<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>):
+</span></span><span style="display:flex;"><span>    inits[i] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sin(np<span style="color:#f92672">.</span>pi<span style="color:#f92672">/</span>points<span style="color:#f92672">*</span>i)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Remember, both the start and end loads are at y = 0</span>
+</span></span><span style="display:flex;"><span>inits[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>inits[<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>sol <span style="color:#f92672">=</span> solve_ivp(
+</span></span><span style="display:flex;"><span>    diff, 
+</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">0</span>, time], 
+</span></span><span style="display:flex;"><span>    inits,
+</span></span><span style="display:flex;"><span>    dense_output<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, 
+</span></span><span style="display:flex;"><span>    rtol<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-8</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>t <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linspace(<span style="color:#ae81ff">0</span>, time, <span style="color:#ae81ff">100</span>)
+</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> sol<span style="color:#f92672">.</span>sol(t)
+</span></span></code></pre></div><p>To visualize what we have solved, I&rsquo;ll use matplotlib&rsquo;s animation functionality</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> matplotlib <span style="color:#f92672">import</span> animation, rc
+</span></span><span style="display:flex;"><span>rc(<span style="color:#e6db74">&#39;animation&#39;</span>, html<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;html5&#39;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>fig, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots()
+</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ax<span style="color:#f92672">.</span>set_xlim(<span style="color:#ae81ff">0</span>, a<span style="color:#f92672">*</span>(moving_loads<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
+</span></span><span style="display:flex;"><span>ax<span style="color:#f92672">.</span>set_ylim(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ax<span style="color:#f92672">.</span>set_xlabel(<span style="color:#e6db74">&#34;x (m)&#34;</span>)
+</span></span><span style="display:flex;"><span>ax<span style="color:#f92672">.</span>set_ylabel(<span style="color:#e6db74">&#34;y (m)&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>loads <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n_loads):
+</span></span><span style="display:flex;"><span>    loads<span style="color:#f92672">.</span>append(ax<span style="color:#f92672">.</span>plot([], [], color<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cornflowerblue&#34;</span>, marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;o&#34;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>text <span style="color:#f92672">=</span> ax<span style="color:#f92672">.</span>text(<span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span>)
+</span></span><span style="display:flex;"><span>lines, <span style="color:#f92672">=</span> ax<span style="color:#f92672">.</span>plot([], [], color<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;orange&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">animate</span>(i):
+</span></span><span style="display:flex;"><span>    text<span style="color:#f92672">.</span>set_text(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>round(t[i], <span style="color:#ae81ff">2</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74"> s&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(n_loads):
+</span></span><span style="display:flex;"><span>        loads[j][<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>set_data([a<span style="color:#f92672">*</span>j, y[j<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>][i]])
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    ass <span style="color:#f92672">=</span> [a<span style="color:#f92672">*</span>j <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(n_loads)]
+</span></span><span style="display:flex;"><span>    yss <span style="color:#f92672">=</span> [y[j<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>][i] <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(n_loads)]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    lines<span style="color:#f92672">.</span>set_data([ass, yss])
+</span></span><span style="display:flex;"><span>    returns <span style="color:#f92672">=</span> loads <span style="color:#f92672">+</span> [lines]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> tuple(returns)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>anim <span style="color:#f92672">=</span> animation<span style="color:#f92672">.</span>FuncAnimation(fig, animate, frames<span style="color:#f92672">=</span>len(y[<span style="color:#ae81ff">0</span>]), blit<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, repeat<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, interval<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">24</span><span style="color:#f92672">*</span><span style="color:#ae81ff">1000</span>)
+</span></span><span style="display:flex;"><span>anim
+</span></span></code></pre></div><p>The end result looks something like this</p>
+<p><img src="https://user-images.githubusercontent.com/32596839/171992081-a20e0ced-f200-4880-8964-9eb99dab2448.gif" alt="string_sim_20L"></p>
+<h3 id="references">References</h3>
+<p>[1] <a href="https://www.wiley.com/en-us/The+Physics+of+Vibrations+and+Waves%2C+6th+Edition-p-9780470012956">The Physics of Vibrations and Waves, 6th Edition</a></p>
+
+	
+  <div>
+    <div>Tags:</div>
+    <ul>
+        <li><a href="/tags/physics/">Physics</a></li>
+        <li><a href="/tags/programming/">Programming</a></li>
+    </ul>
+  </div>
+
+
+			</main>
+			<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#references">References</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+			<nav id="blogs">
+				<ul>
+					<li>
+						<a href="/">Home</a>
+					</li>
+					
+					<li>
+						<a href="/blog/string-simulation/">String Simulation</a>
+					</li>
+					
+				</ul>
+			</nav>
+		</div>
+	</div>
+</body>
+</html>

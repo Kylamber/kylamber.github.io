@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.LanguageCode }}" dir="{{ or site.Language.LanguageDirection `ltr` }}">
+<head>
+	{{ partial "head.html" . }}
+
+	{{ if .Param "math" }}
+		{{ partialCached "math.html" . }}
+	{{ end }}
+
+</head>
+<body>
+	<input type="checkbox" id="theme-switcher">
+	<input type="checkbox" id="toc-opener">
+	<input type="checkbox" id="blogs-opener">
+
+	<div id="page">
+		<div class="content"> 
+			<label for="theme-switcher" id="theme-switcher-label"></label>
+			<label for="toc-opener" id="toc-opener-label"></label>
+			<label for="blogs-opener" id="blogs-opener-label"></label>
+			<main>
+				{{ block "main" . }}{{ end }}
+			</main>
+			{{ .TableOfContents }}
+			<nav id="blogs">
+				<ul>
+					<li>
+						<a href="{{ .Site.Home.RelPermalink }}">Home</a>
+					</li>
+					{{ range .Site.RegularPages }}
+					<li>
+						<a href="{{ .RelPermalink }}">{{ .Title }}</a>
+					</li>
+					{{ end }}
+				</ul>
+			</nav>
+		</div>
+	</div>
+</body>
+</html>
