@@ -1,0 +1,15 @@
+baseURL = 'https://imadrian.fyi/'
+languageCode = 'en-us'
+title = "I'm Adrian, FYI"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          block = [['\[', '\]'], ['$$', '$$']]
+          inline = [['\(', '\)']]
+
+[params]
+  math = true
