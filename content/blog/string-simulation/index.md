@@ -9,7 +9,7 @@ tags:
 
 Say you have a load on a massless string placed somewhat like this.
 
-![image](https://user-images.githubusercontent.com/32596839/171990327-482a552d-b665-4383-85a7-2df4867e02c0.png)
+![String Free Body Diagram](/blog/string-simulation/diagram.png)
 
 Fig 1. Displacements of three masses on a loaded string under tension T. Sourced from [1, p. 91].
 
@@ -159,7 +159,7 @@ anim
 
 The end result looks something like this
 
-![string_sim_20L](https://user-images.githubusercontent.com/32596839/171992081-a20e0ced-f200-4880-8964-9eb99dab2448.gif)
+![String Simulation 20L](/blog/string-simulation/animation.gif)
 
 ### References
 

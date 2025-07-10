@@ -1,0 +1,1 @@
+(()=>{document.addEventListener("DOMContentLoaded",()=>{let t=document.getElementById("theme-switcher"),r=window.matchMedia("(prefers-color-scheme: dark)"),e=!1;r.matches&&(e=!0);let c=localStorage.getItem("theme");c=="dark"?e=!0:c=="light"&&(e=!1),t.checked=e,t.addEventListener("input",function(){localStorage.setItem("theme",t.checked?"dark":"light")})});})();

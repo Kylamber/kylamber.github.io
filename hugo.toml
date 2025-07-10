@@ -8,6 +8,11 @@ theme = "better-default"
     dir = ':cacheDir/images'
 
 [markup]
+  [markup.highlight]
+    lineNos = true
+    style = 'gruvbox'
+    # style = 'native'
+    # style = 'xcode-dark'
   [markup.goldmark]
     [markup.goldmark.extensions]
       [markup.goldmark.extensions.passthrough]

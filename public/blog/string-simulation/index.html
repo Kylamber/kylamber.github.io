@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+<head>
 	<meta charset="utf-8">
 <meta name="viewport" content="width=device-width">
 <title>String Simulation | I&#39;m Adrian, FYI</title>
 
-    <link rel="stylesheet" href="/css/main.css">
+      <link rel="stylesheet" href="/css/main.min.e5cc3871126ba9fd1da2efd8cca6d50941700ae015ff28ed3ca742e14a03c7d0.css" integrity="sha256-5cw4cRJrqf0dou/YzKbVCUFwCuAV/yjtPKdC4UoDx9A=" crossorigin="anonymous">
 
 
-      <script src="/js/main.js"></script>
+        <script src="/js/main.fabb0090d5147bfaf4e445f03b4889ae85e55fc9a28456a36d94a6492cc02b95.js" integrity="sha256-&#43;rsAkNUUe/r05EXwO0iJroXlX8mihFajbZSmSSzAK5U=" crossorigin="anonymous"></script>
 
 
 
@@ -65,9 +65,18 @@
 	
 	
 	<time datetime="2022-06-05T22:55:22&#43;07:00">June 5, 2022</time>
+	
+	<div>
+		<p>
+			Tags:
+				<a href="/tags/physics/">Physics</a>,
+				<a href="/tags/programming/">Programming</a>
+		</p>
+	</div>
+
 
 	<p>Say you have a load on a massless string placed somewhat like this.</p>
-<p><img src="https://user-images.githubusercontent.com/32596839/171990327-482a552d-b665-4383-85a7-2df4867e02c0.png" alt="image"></p>
+<p><img src="/blog/string-simulation/diagram.png" alt="String Free Body Diagram"></p>
 <p>Fig 1. Displacements of three masses on a loaded string under tension T. Sourced from [1, p. 91].</p>
 <p>The differential equation for each load is</p>
 <p>\[ \ddot{y_r} = \frac{T}{ma}(y_{r-1}-2y_r+y_{r+1}) \]</p>
@@ -75,125 +84,257 @@
 <blockquote>
 <p>I don&rsquo;t know whether the \( m \) is actually \( m_r \) so that it doesn&rsquo;t matter whether the loads&rsquo; masses are different or must it be uniform.</p></blockquote>
 <p>Say that we have \( n \) loads. If we fix the \( 0 \)th and \( n \)th load at \( y = 0 \) and \( \dot{y} = 0 \), we have a &ldquo;string&rdquo; that is tied at both ends. When \( n = 0 \) there are no moving loads, the same goes for \( n = 1 \) and \( n = 2 \). There is one moving load when \( n = 3 \) and two moving loads when \( n = 4 \). The number of moving loads is then defined as \( n - 2 \) when \( n \geq 3 \).</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>moving_loads <span style="color:#f92672">=</span> <span style="color:#ae81ff">20</span>
-</span></span><span style="display:flex;"><span>n_loads <span style="color:#f92672">=</span> moving_loads<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>
+<div class="highlight"><div style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">6
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>moving_loads <span style="color:#fe8019">=</span> <span style="color:#d3869b">20</span>
+</span></span><span style="display:flex;"><span>n_loads <span style="color:#fe8019">=</span> moving_loads<span style="color:#fe8019">+</span><span style="color:#d3869b">2</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>T <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># N</span>
-</span></span><span style="display:flex;"><span>m <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.5</span><span style="color:#f92672">/</span>n_loads <span style="color:#75715e"># kg</span>
-</span></span><span style="display:flex;"><span>a <span style="color:#f92672">=</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">/</span>n_loads <span style="color:#75715e"># m</span>
-</span></span></code></pre></div><p>We&rsquo;ll use SciPy to solve our differential equation numerically. Before that, a bit of imports.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> scipy.integrate <span style="color:#f92672">import</span> solve_ivp
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
-</span></span></code></pre></div><p>Our input to the function is \( [y_0, \dot{y_0}, y_1, \dot{y_1}, \cdots, y_n, \dot{y_n}] \), and that is why the output is \( [\dot{y_0}, \ddot{y_0}, \dot{y_1}, \ddot{y_1}, \cdots, \dot{y_n}, \ddot{y_n}] \).</p>
+</span></span><span style="display:flex;"><span>T <span style="color:#fe8019">=</span> <span style="color:#d3869b">1</span> <span style="color:#928374;font-style:italic"># N</span>
+</span></span><span style="display:flex;"><span>m <span style="color:#fe8019">=</span> <span style="color:#d3869b">1.5</span><span style="color:#fe8019">/</span>n_loads <span style="color:#928374;font-style:italic"># kg</span>
+</span></span><span style="display:flex;"><span>a <span style="color:#fe8019">=</span> <span style="color:#d3869b">2</span><span style="color:#fe8019">/</span>n_loads <span style="color:#928374;font-style:italic"># m</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>We&rsquo;ll use SciPy to solve our differential equation numerically. Before that, a bit of imports.</p>
+<div class="highlight"><div style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#fe8019">from</span> scipy.integrate <span style="color:#fe8019">import</span> solve_ivp
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> matplotlib.pyplot <span style="color:#fe8019">as</span> plt
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">import</span> numpy <span style="color:#fe8019">as</span> np
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Our input to the function is \( [y_0, \dot{y_0}, y_1, \dot{y_1}, \cdots, y_n, \dot{y_n}] \), and that is why the output is \( [\dot{y_0}, \ddot{y_0}, \dot{y_1}, \ddot{y_1}, \cdots, \dot{y_n}, \ddot{y_n}] \).</p>
 <p>Say that we have 4 loads, or in other words 2 moving loads. The differential equation will be</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">diff</span>(t, y):
-</span></span><span style="display:flex;"><span>    n_yp <span style="color:#f92672">=</span> n_loads<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span> <span style="color:#75715e"># there are n amounts of y dot and y double dots</span>
-</span></span><span style="display:flex;"><span>    yp <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(n_yp) <span style="color:#75715e"># place to store the differential equations (yp as in y prime)</span>
+<div class="highlight"><div style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">17
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">diff</span>(t, y):
+</span></span><span style="display:flex;"><span>    n_yp <span style="color:#fe8019">=</span> n_loads<span style="color:#fe8019">*</span><span style="color:#d3869b">2</span> <span style="color:#928374;font-style:italic"># there are n amounts of y dot and y double dots</span>
+</span></span><span style="display:flex;"><span>    yp <span style="color:#fe8019">=</span> np<span style="color:#fe8019">.</span>zeros(n_yp) <span style="color:#928374;font-style:italic"># place to store the differential equations (yp as in y prime)</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    yp[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> y[<span style="color:#ae81ff">1</span>]
-</span></span><span style="display:flex;"><span>    yp[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    yp[<span style="color:#d3869b">0</span>] <span style="color:#fe8019">=</span> y[<span style="color:#d3869b">1</span>]
+</span></span><span style="display:flex;"><span>    yp[<span style="color:#d3869b">1</span>] <span style="color:#fe8019">=</span> <span style="color:#d3869b">0</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    yp[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> y[<span style="color:#ae81ff">3</span>]
-</span></span><span style="display:flex;"><span>    yp[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> T<span style="color:#f92672">/</span>(m<span style="color:#f92672">*</span>a) <span style="color:#f92672">*</span> (y[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>y[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">+</span> y[<span style="color:#ae81ff">4</span>])
+</span></span><span style="display:flex;"><span>    yp[<span style="color:#d3869b">2</span>] <span style="color:#fe8019">=</span> y[<span style="color:#d3869b">3</span>]
+</span></span><span style="display:flex;"><span>    yp[<span style="color:#d3869b">3</span>] <span style="color:#fe8019">=</span> T<span style="color:#fe8019">/</span>(m<span style="color:#fe8019">*</span>a) <span style="color:#fe8019">*</span> (y[<span style="color:#d3869b">0</span>] <span style="color:#fe8019">-</span> <span style="color:#d3869b">2</span><span style="color:#fe8019">*</span>y[<span style="color:#d3869b">2</span>] <span style="color:#fe8019">+</span> y[<span style="color:#d3869b">4</span>])
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    yp[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> y[<span style="color:#ae81ff">5</span>]
-</span></span><span style="display:flex;"><span>    yp[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> T<span style="color:#f92672">/</span>(m<span style="color:#f92672">*</span>a) <span style="color:#f92672">*</span> (y[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>y[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">+</span> y[<span style="color:#ae81ff">6</span>])
+</span></span><span style="display:flex;"><span>    yp[<span style="color:#d3869b">4</span>] <span style="color:#fe8019">=</span> y[<span style="color:#d3869b">5</span>]
+</span></span><span style="display:flex;"><span>    yp[<span style="color:#d3869b">5</span>] <span style="color:#fe8019">=</span> T<span style="color:#fe8019">/</span>(m<span style="color:#fe8019">*</span>a) <span style="color:#fe8019">*</span> (y[<span style="color:#d3869b">2</span>] <span style="color:#fe8019">-</span> <span style="color:#d3869b">2</span><span style="color:#fe8019">*</span>y[<span style="color:#d3869b">4</span>] <span style="color:#fe8019">+</span> y[<span style="color:#d3869b">6</span>])
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    yp[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">=</span> y[<span style="color:#ae81ff">7</span>]
-</span></span><span style="display:flex;"><span>    yp[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    yp[<span style="color:#d3869b">6</span>] <span style="color:#fe8019">=</span> y[<span style="color:#d3869b">7</span>]
+</span></span><span style="display:flex;"><span>    yp[<span style="color:#d3869b">7</span>] <span style="color:#fe8019">=</span> <span style="color:#d3869b">0</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> yp
-</span></span></code></pre></div><p>From that, we can see the generalized version using <code>for</code> loops is</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">diff</span>(t, y):
-</span></span><span style="display:flex;"><span>    n_ya <span style="color:#f92672">=</span> n_loads<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span> <span style="color:#75715e"># there are n amounts of y dot and y double dots</span>
-</span></span><span style="display:flex;"><span>    ya <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros(n_ya)
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> yp
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>From that, we can see the generalized version using <code>for</code> loops is</p>
+<div class="highlight"><div style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">14
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">diff</span>(t, y):
+</span></span><span style="display:flex;"><span>    n_ya <span style="color:#fe8019">=</span> n_loads<span style="color:#fe8019">*</span><span style="color:#d3869b">2</span> <span style="color:#928374;font-style:italic"># there are n amounts of y dot and y double dots</span>
+</span></span><span style="display:flex;"><span>    ya <span style="color:#fe8019">=</span> np<span style="color:#fe8019">.</span>zeros(n_ya)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, n_ya, <span style="color:#ae81ff">2</span>):
-</span></span><span style="display:flex;"><span>        ya[i<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> y[i]
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">for</span> i <span style="color:#fe8019">in</span> <span style="color:#fabd2f">range</span>(<span style="color:#d3869b">1</span>, n_ya, <span style="color:#d3869b">2</span>):
+</span></span><span style="display:flex;"><span>        ya[i<span style="color:#fe8019">-</span><span style="color:#d3869b">1</span>] <span style="color:#fe8019">=</span> y[i]
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">3</span>, n_ya<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>):
-</span></span><span style="display:flex;"><span>        ya[i] <span style="color:#f92672">=</span> T<span style="color:#f92672">/</span>(m<span style="color:#f92672">*</span>a) <span style="color:#f92672">*</span> (y[i<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>y[i<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>] <span style="color:#f92672">+</span> y[i<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">4</span>])
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">for</span> i <span style="color:#fe8019">in</span> <span style="color:#fabd2f">range</span>(<span style="color:#d3869b">3</span>, n_ya<span style="color:#fe8019">-</span><span style="color:#d3869b">1</span>, <span style="color:#d3869b">2</span>):
+</span></span><span style="display:flex;"><span>        ya[i] <span style="color:#fe8019">=</span> T<span style="color:#fe8019">/</span>(m<span style="color:#fe8019">*</span>a) <span style="color:#fe8019">*</span> (y[i<span style="color:#fe8019">-</span><span style="color:#d3869b">3</span>] <span style="color:#fe8019">-</span> <span style="color:#d3869b">2</span><span style="color:#fe8019">*</span>y[i<span style="color:#fe8019">-</span><span style="color:#d3869b">3</span><span style="color:#fe8019">+</span><span style="color:#d3869b">2</span>] <span style="color:#fe8019">+</span> y[i<span style="color:#fe8019">-</span><span style="color:#d3869b">3</span><span style="color:#fe8019">+</span><span style="color:#d3869b">4</span>])
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    ya[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>    ya[n_ya<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>    ya[<span style="color:#d3869b">1</span>] <span style="color:#fe8019">=</span> <span style="color:#d3869b">0</span>
+</span></span><span style="display:flex;"><span>    ya[n_ya<span style="color:#fe8019">-</span><span style="color:#d3869b">1</span>] <span style="color:#fe8019">=</span> <span style="color:#d3869b">0</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>array(ya)
-</span></span></code></pre></div><p>Before solving the differential equation, we need initial values. Starting simple, we can just set the first moving load to some height or change its velocity to a non zero velocity to see what happens. After that we can set the initial values to one sine wave to see a standing wave, this is one of its normal modes.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#75715e"># 1 Full Sine Wave</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span>, points<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>):
-</span></span><span style="display:flex;"><span>    inits[i] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sin(np<span style="color:#f92672">.</span>pi<span style="color:#f92672">/</span>points<span style="color:#f92672">*</span>i)
-</span></span></code></pre></div><p>Solving the differential equation using SciPy, we have</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>time <span style="color:#f92672">=</span> <span style="color:#ae81ff">5</span>
-</span></span><span style="display:flex;"><span>inits <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n_loads<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>)]
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> np<span style="color:#fe8019">.</span>array(ya)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Before solving the differential equation, we need initial values. Starting simple, we can just set the first moving load to some height or change its velocity to a non zero velocity to see what happens. After that we can set the initial values to one sine wave to see a standing wave, this is one of its normal modes.</p>
+<div class="highlight"><div style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># 1 Full Sine Wave</span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">for</span> i <span style="color:#fe8019">in</span> <span style="color:#fabd2f">range</span>(<span style="color:#d3869b">2</span>, points<span style="color:#fe8019">*</span><span style="color:#d3869b">2</span>, <span style="color:#d3869b">2</span>):
+</span></span><span style="display:flex;"><span>    inits[i] <span style="color:#fe8019">=</span> np<span style="color:#fe8019">.</span>sin(np<span style="color:#fe8019">.</span>pi<span style="color:#fe8019">/</span>points<span style="color:#fe8019">*</span>i)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Solving the differential equation using SciPy, we have</p>
+<div class="highlight"><div style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">20
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>time <span style="color:#fe8019">=</span> <span style="color:#d3869b">5</span>
+</span></span><span style="display:flex;"><span>inits <span style="color:#fe8019">=</span> [<span style="color:#d3869b">0</span> <span style="color:#fe8019">for</span> i <span style="color:#fe8019">in</span> <span style="color:#fabd2f">range</span>(n_loads<span style="color:#fe8019">*</span><span style="color:#d3869b">2</span>)]
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 1 Full Sine Wave</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span>, points<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span>):
-</span></span><span style="display:flex;"><span>    inits[i] <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>sin(np<span style="color:#f92672">.</span>pi<span style="color:#f92672">/</span>points<span style="color:#f92672">*</span>i)
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># 1 Full Sine Wave</span>
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">for</span> i <span style="color:#fe8019">in</span> <span style="color:#fabd2f">range</span>(<span style="color:#d3869b">2</span>, points<span style="color:#fe8019">*</span><span style="color:#d3869b">2</span>, <span style="color:#d3869b">2</span>):
+</span></span><span style="display:flex;"><span>    inits[i] <span style="color:#fe8019">=</span> np<span style="color:#fe8019">.</span>sin(np<span style="color:#fe8019">.</span>pi<span style="color:#fe8019">/</span>points<span style="color:#fe8019">*</span>i)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Remember, both the start and end loads are at y = 0</span>
-</span></span><span style="display:flex;"><span>inits[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>inits[<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span>sol <span style="color:#f92672">=</span> solve_ivp(
+</span></span><span style="display:flex;"><span><span style="color:#928374;font-style:italic"># Remember, both the start and end loads are at y = 0</span>
+</span></span><span style="display:flex;"><span>inits[<span style="color:#d3869b">0</span>] <span style="color:#fe8019">=</span> <span style="color:#d3869b">0</span>
+</span></span><span style="display:flex;"><span>inits[<span style="color:#fe8019">-</span><span style="color:#d3869b">2</span>] <span style="color:#fe8019">=</span> <span style="color:#d3869b">0</span>
+</span></span><span style="display:flex;"><span>sol <span style="color:#fe8019">=</span> solve_ivp(
 </span></span><span style="display:flex;"><span>    diff, 
-</span></span><span style="display:flex;"><span>    [<span style="color:#ae81ff">0</span>, time], 
+</span></span><span style="display:flex;"><span>    [<span style="color:#d3869b">0</span>, time], 
 </span></span><span style="display:flex;"><span>    inits,
-</span></span><span style="display:flex;"><span>    dense_output<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, 
-</span></span><span style="display:flex;"><span>    rtol<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-8</span>
+</span></span><span style="display:flex;"><span>    dense_output<span style="color:#fe8019">=</span><span style="color:#fe8019">True</span>, 
+</span></span><span style="display:flex;"><span>    rtol<span style="color:#fe8019">=</span><span style="color:#d3869b">1e-8</span>
 </span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>t <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linspace(<span style="color:#ae81ff">0</span>, time, <span style="color:#ae81ff">100</span>)
-</span></span><span style="display:flex;"><span>y <span style="color:#f92672">=</span> sol<span style="color:#f92672">.</span>sol(t)
-</span></span></code></pre></div><p>To visualize what we have solved, I&rsquo;ll use matplotlib&rsquo;s animation functionality</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">from</span> matplotlib <span style="color:#f92672">import</span> animation, rc
-</span></span><span style="display:flex;"><span>rc(<span style="color:#e6db74">&#39;animation&#39;</span>, html<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;html5&#39;</span>)
+</span></span><span style="display:flex;"><span>t <span style="color:#fe8019">=</span> np<span style="color:#fe8019">.</span>linspace(<span style="color:#d3869b">0</span>, time, <span style="color:#d3869b">100</span>)
+</span></span><span style="display:flex;"><span>y <span style="color:#fe8019">=</span> sol<span style="color:#fe8019">.</span>sol(t)
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>To visualize what we have solved, I&rsquo;ll use matplotlib&rsquo;s animation functionality</p>
+<div class="highlight"><div style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">
+<table style="border-spacing:0;padding:0;margin:0;border:0;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 1
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 2
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 3
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 4
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 5
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 6
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 7
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 8
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59"> 9
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">10
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">11
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">12
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">13
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">14
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">15
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">16
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">17
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">18
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">19
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">20
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">21
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">22
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">23
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">24
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">25
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">26
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">27
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">28
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">29
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">30
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">31
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">32
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">33
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">34
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">35
+</span><span style="white-space:pre;-webkit-user-select:none;user-select:none;margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#756d59">36
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre tabindex="0" style="color:#ebdbb2;background-color:#282828;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#fe8019">from</span> matplotlib <span style="color:#fe8019">import</span> animation, rc
+</span></span><span style="display:flex;"><span>rc(<span style="color:#b8bb26">&#39;animation&#39;</span>, html<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#39;html5&#39;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>fig, ax <span style="color:#f92672">=</span> plt<span style="color:#f92672">.</span>subplots()
-</span></span><span style="display:flex;"><span>plt<span style="color:#f92672">.</span>close()
+</span></span><span style="display:flex;"><span>fig, ax <span style="color:#fe8019">=</span> plt<span style="color:#fe8019">.</span>subplots()
+</span></span><span style="display:flex;"><span>plt<span style="color:#fe8019">.</span>close()
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>ax<span style="color:#f92672">.</span>set_xlim(<span style="color:#ae81ff">0</span>, a<span style="color:#f92672">*</span>(moving_loads<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>))
-</span></span><span style="display:flex;"><span>ax<span style="color:#f92672">.</span>set_ylim(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>ax<span style="color:#fe8019">.</span>set_xlim(<span style="color:#d3869b">0</span>, a<span style="color:#fe8019">*</span>(moving_loads<span style="color:#fe8019">+</span><span style="color:#d3869b">1</span>))
+</span></span><span style="display:flex;"><span>ax<span style="color:#fe8019">.</span>set_ylim(<span style="color:#fe8019">-</span><span style="color:#d3869b">1</span>, <span style="color:#d3869b">1</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>ax<span style="color:#f92672">.</span>set_xlabel(<span style="color:#e6db74">&#34;x (m)&#34;</span>)
-</span></span><span style="display:flex;"><span>ax<span style="color:#f92672">.</span>set_ylabel(<span style="color:#e6db74">&#34;y (m)&#34;</span>)
+</span></span><span style="display:flex;"><span>ax<span style="color:#fe8019">.</span>set_xlabel(<span style="color:#b8bb26">&#34;x (m)&#34;</span>)
+</span></span><span style="display:flex;"><span>ax<span style="color:#fe8019">.</span>set_ylabel(<span style="color:#b8bb26">&#34;y (m)&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>loads <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>loads <span style="color:#fe8019">=</span> []
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(n_loads):
-</span></span><span style="display:flex;"><span>    loads<span style="color:#f92672">.</span>append(ax<span style="color:#f92672">.</span>plot([], [], color<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;cornflowerblue&#34;</span>, marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;o&#34;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">for</span> i <span style="color:#fe8019">in</span> <span style="color:#fabd2f">range</span>(n_loads):
+</span></span><span style="display:flex;"><span>    loads<span style="color:#fe8019">.</span>append(ax<span style="color:#fe8019">.</span>plot([], [], color<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#34;cornflowerblue&#34;</span>, marker<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#34;o&#34;</span>))
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>text <span style="color:#f92672">=</span> ax<span style="color:#f92672">.</span>text(<span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0.5</span>, <span style="color:#ae81ff">0</span>, fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span>)
-</span></span><span style="display:flex;"><span>lines, <span style="color:#f92672">=</span> ax<span style="color:#f92672">.</span>plot([], [], color<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;orange&#34;</span>)
+</span></span><span style="display:flex;"><span>text <span style="color:#fe8019">=</span> ax<span style="color:#fe8019">.</span>text(<span style="color:#d3869b">0.5</span>, <span style="color:#d3869b">0.5</span>, <span style="color:#d3869b">0</span>, fontsize<span style="color:#fe8019">=</span><span style="color:#d3869b">12</span>)
+</span></span><span style="display:flex;"><span>lines, <span style="color:#fe8019">=</span> ax<span style="color:#fe8019">.</span>plot([], [], color<span style="color:#fe8019">=</span><span style="color:#b8bb26">&#34;orange&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">animate</span>(i):
-</span></span><span style="display:flex;"><span>    text<span style="color:#f92672">.</span>set_text(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>round(t[i], <span style="color:#ae81ff">2</span>)<span style="color:#e6db74">}</span><span style="color:#e6db74"> s&#34;</span>)
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(n_loads):
-</span></span><span style="display:flex;"><span>        loads[j][<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>set_data([a<span style="color:#f92672">*</span>j, y[j<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>][i]])
+</span></span><span style="display:flex;"><span><span style="color:#fe8019">def</span> <span style="color:#fabd2f">animate</span>(i):
+</span></span><span style="display:flex;"><span>    text<span style="color:#fe8019">.</span>set_text(<span style="color:#b8bb26">f</span><span style="color:#b8bb26">&#34;</span><span style="color:#b8bb26">{</span><span style="color:#fabd2f">round</span>(t[i], <span style="color:#d3869b">2</span>)<span style="color:#b8bb26">}</span><span style="color:#b8bb26"> s&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">for</span> j <span style="color:#fe8019">in</span> <span style="color:#fabd2f">range</span>(n_loads):
+</span></span><span style="display:flex;"><span>        loads[j][<span style="color:#d3869b">0</span>]<span style="color:#fe8019">.</span>set_data([a<span style="color:#fe8019">*</span>j, y[j<span style="color:#fe8019">*</span><span style="color:#d3869b">2</span>][i]])
 </span></span><span style="display:flex;"><span>    
-</span></span><span style="display:flex;"><span>    ass <span style="color:#f92672">=</span> [a<span style="color:#f92672">*</span>j <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(n_loads)]
-</span></span><span style="display:flex;"><span>    yss <span style="color:#f92672">=</span> [y[j<span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>][i] <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(n_loads)]
+</span></span><span style="display:flex;"><span>    ass <span style="color:#fe8019">=</span> [a<span style="color:#fe8019">*</span>j <span style="color:#fe8019">for</span> j <span style="color:#fe8019">in</span> <span style="color:#fabd2f">range</span>(n_loads)]
+</span></span><span style="display:flex;"><span>    yss <span style="color:#fe8019">=</span> [y[j<span style="color:#fe8019">*</span><span style="color:#d3869b">2</span>][i] <span style="color:#fe8019">for</span> j <span style="color:#fe8019">in</span> <span style="color:#fabd2f">range</span>(n_loads)]
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    lines<span style="color:#f92672">.</span>set_data([ass, yss])
-</span></span><span style="display:flex;"><span>    returns <span style="color:#f92672">=</span> loads <span style="color:#f92672">+</span> [lines]
+</span></span><span style="display:flex;"><span>    lines<span style="color:#fe8019">.</span>set_data([ass, yss])
+</span></span><span style="display:flex;"><span>    returns <span style="color:#fe8019">=</span> loads <span style="color:#fe8019">+</span> [lines]
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> tuple(returns)
+</span></span><span style="display:flex;"><span>    <span style="color:#fe8019">return</span> <span style="color:#fabd2f">tuple</span>(returns)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>anim <span style="color:#f92672">=</span> animation<span style="color:#f92672">.</span>FuncAnimation(fig, animate, frames<span style="color:#f92672">=</span>len(y[<span style="color:#ae81ff">0</span>]), blit<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>, repeat<span style="color:#f92672">=</span><span style="color:#66d9ef">True</span>, interval<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span><span style="color:#f92672">/</span><span style="color:#ae81ff">24</span><span style="color:#f92672">*</span><span style="color:#ae81ff">1000</span>)
+</span></span><span style="display:flex;"><span>anim <span style="color:#fe8019">=</span> animation<span style="color:#fe8019">.</span>FuncAnimation(fig, animate, frames<span style="color:#fe8019">=</span><span style="color:#fabd2f">len</span>(y[<span style="color:#d3869b">0</span>]), blit<span style="color:#fe8019">=</span><span style="color:#fe8019">False</span>, repeat<span style="color:#fe8019">=</span><span style="color:#fe8019">True</span>, interval<span style="color:#fe8019">=</span><span style="color:#d3869b">1</span><span style="color:#fe8019">/</span><span style="color:#d3869b">24</span><span style="color:#fe8019">*</span><span style="color:#d3869b">1000</span>)
 </span></span><span style="display:flex;"><span>anim
-</span></span></code></pre></div><p>The end result looks something like this</p>
-<p><img src="https://user-images.githubusercontent.com/32596839/171992081-a20e0ced-f200-4880-8964-9eb99dab2448.gif" alt="string_sim_20L"></p>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>The end result looks something like this</p>
+<p><img src="/blog/string-simulation/animation.gif" alt="String Simulation 20L"></p>
 <h3 id="references">References</h3>
 <p>[1] <a href="https://www.wiley.com/en-us/The+Physics+of+Vibrations+and+Waves%2C+6th+Edition-p-9780470012956">The Physics of Vibrations and Waves, 6th Edition</a></p>
-
-	
-  <div>
-    <div>Tags:</div>
-    <ul>
-        <li><a href="/tags/physics/">Physics</a></li>
-        <li><a href="/tags/programming/">Programming</a></li>
-    </ul>
-  </div>
 
 
 			</main>
@@ -213,7 +354,10 @@
 					</li>
 					
 					<li>
+						
+						
 						<a href="/blog/string-simulation/">String Simulation</a>
+						<time datetime="2022-06-05T22:55:22&#43;07:00">June 5, 2022</time>
 					</li>
 					
 				</ul>
