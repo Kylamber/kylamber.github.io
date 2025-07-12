@@ -5,6 +5,7 @@ title: 'String Simulation'
 tags:
 - 'physics'
 - 'programming'
+- 'python'
 ---
 
 Say you have a load on a massless string placed somewhat like this.

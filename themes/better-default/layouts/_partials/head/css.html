@@ -1,9 +1,17 @@
-{{- with resources.Get "css/main.css" }}
-  {{- if hugo.IsDevelopment }}
-    <link rel="stylesheet" href="{{ .RelPermalink }}">
-  {{- else }}
-    {{- with . | minify | fingerprint }}
-      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
-    {{- end }}
-  {{- end }}
+{{ $csss := slice 
+	(dict "link" "css/main.css" "id" "maincss")
+	(dict "link" "css/syntax-light.css" "id" "syntax-light")
+	(dict "link" "css/syntax-dark.css" "id" "syntax-dark")
+}}
+
+{{- range $css := $csss }}
+	{{- with resources.Get $css.link }}
+		{{- if hugo.IsDevelopment }}
+		<link rel="stylesheet" href="{{ .RelPermalink }}" id="{{ $css.id }}">
+		{{- else }}
+			{{- with . | minify | fingerprint }}
+				<link rel="stylesheet" href="{{ .RelPermalink }}" id="{{ $css.id }}" integrity="{{ .Data.Integrity }}" crossorigin="anonymous">
+			{{- end }}
+		{{- end }}
+	{{- end }}
 {{- end }}

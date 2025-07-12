@@ -10,9 +10,10 @@ theme = "better-default"
 [markup]
   [markup.highlight]
     lineNos = true
-    style = 'gruvbox'
+    # style = 'gruvbox'
     # style = 'native'
-    # style = 'xcode-dark'
+    # style = 'evergarden'
+	noClasses = false
   [markup.goldmark]
     [markup.goldmark.extensions]
       [markup.goldmark.extensions.passthrough]

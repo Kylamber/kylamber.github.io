@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<title>Python Getting Started | I&#39;m Adrian, FYI</title>
+
+
+		<link rel="stylesheet" href="/css/main.css" id="maincss">
+		<link rel="stylesheet" href="/css/syntax-light.css" id="syntax-light">
+		<link rel="stylesheet" href="/css/syntax-dark.css" id="syntax-dark">
+
+
+      <script src="/js/main.js"></script>
+
+
+
+	
+		<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.css"
+  integrity="sha384-zh0CIslj+VczCZtlzBcjt5ppRcsAmDnRem7ESsYwWwg3m/OaJ2l4x7YBZl9Kxxib"
+  crossorigin="anonymous"
+>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/katex.min.js"
+  integrity="sha384-Rma6DA2IPUwhNxmrB/7S3Tno0YY7sFu9WSYMCuulLhIqYSGZ2gKCJWIqhBWqMQfh"
+  crossorigin="anonymous">
+</script>
+<script
+  defer
+  src="https://cdn.jsdelivr.net/npm/katex@0.16.21/dist/contrib/auto-render.min.js"
+  integrity="sha384-hCXGrW6PitJEwbkoStFjeJxv+fSOOQKOPbJxSfM6G5sWZjAyWhXiTIIAmQqnlLlh"
+  crossorigin="anonymous"
+  onload="renderMathInElement(document.body);">
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: '\\[', right: '\\]', display: true},   
+        {left: '$$', right: '$$', display: true},     
+        {left: '\\(', right: '\\)', display: false},  
+      ],
+      throwOnError : false
+    });
+  });
+</script>
+
+	
+
+</head>
+<body>
+	<input type="checkbox" id="theme-switcher">
+	<input type="checkbox" id="toc-opener">
+	<input type="checkbox" id="blogs-opener">
+
+	<div id="page">
+		<div class="content"> 
+			<label for="theme-switcher" id="theme-switcher-label"></label>
+			<label for="toc-opener" id="toc-opener-label"></label>
+			<label for="blogs-opener" id="blogs-opener-label"></label>
+			<main>
+				
+	<h1>Python Getting Started</h1>
+
+	
+	
+	<time datetime="2025-07-12T18:43:30&#43;07:00">July 12, 2025</time>
+	
+	<div>
+		<p>
+			Tags:
+				<a href="/tags/programming/">Programming</a>,
+				<a href="/tags/python/">Python</a>
+		</p>
+	</div>
+
+
+	<p>Python is a programming language. But not all computers can read Python. You&rsquo;d first need to download Python from <a href="https://www.python.org">https://www.python.org</a>. For guides on how to install Python, I&rsquo;ll refer these videos for MacOS or Windows.</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=C3bOxcILGu4">Amit Thinks - How to install Python 3.13.0 on Windows 11</a></li>
+<li><a href="https://www.youtube.com/watch?v=utVZYVJSTZA">WittCode - How to Install Python on Mac</a></li>
+</ul>
+<p>What&rsquo;s important is that Python needs to be added to the PATH or Environment Variables. This enables you to access Python through Command Prompt/Terminal (I&rsquo;ll use the term terminal to reference these because it&rsquo;s shorter).</p>
+<p>After installation you should be able to run <code>python</code> or <code>python3</code> inside the terminal (pick whichever works)</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="gp">$</span> python3
+</span></span><span class="line"><span class="cl"><span class="go">Python 3.13.5 (main, Jun 21 2025, 15:00:31) [GCC 15.1.1 20250425] on linux
+</span></span></span><span class="line"><span class="cl"><span class="go">Type &#34;help&#34;, &#34;copyright&#34;, &#34;credits&#34; or &#34;license&#34; for more information.
+</span></span></span><span class="line"><span class="cl"><span class="go"></span><span class="gp">&gt;</span>&gt;&gt; 1+1
+</span></span><span class="line"><span class="cl"><span class="go">2
+</span></span></span><span class="line"><span class="cl"><span class="go"></span><span class="gp">&gt;</span>&gt;&gt; exit<span class="o">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="installing-additional-packages">Installing additional packages</h2>
+<p>Python, by default, doesn&rsquo;t come with the fancy <em>packages</em>. For example, if you want to work with Excel files in Python you&rsquo;d need <a href="https://www.pandas.pydata.org">Pandas</a>. If you tried to run Pandas, you would get this error</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="gp">$</span> python3
+</span></span><span class="line"><span class="cl"><span class="go">Python 3.13.5 (main, Jun 21 2025, 15:00:31) [GCC 15.1.1 20250425] on linux
+</span></span></span><span class="line"><span class="cl"><span class="go">Type &#34;help&#34;, &#34;copyright&#34;, &#34;credits&#34; or &#34;license&#34; for more information.
+</span></span></span><span class="line"><span class="cl"><span class="go"></span><span class="gp">&gt;</span>&gt;&gt; import pandas
+</span></span><span class="line"><span class="cl"><span class="go">Traceback (most recent call last):
+</span></span></span><span class="line"><span class="cl"><span class="go">  File &#34;&lt;python-input-0&gt;&#34;, line 1, in &lt;module&gt;
+</span></span></span><span class="line"><span class="cl"><span class="go">    import pandas
+</span></span></span><span class="line"><span class="cl"><span class="go">ModuleNotFoundError: No module named &#39;pandas&#39;
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>To get the ability to use these packages, you&rsquo;d need to install them through <a href="https://pip.pypa.io/en/stable/getting-started/">Pip</a>. Pip is a package manager for Python, it downloads ands installs the packages you specify from <a href="https://pypi.org/">PyPi</a> to your computer. For example, you should be able to run either</p>
+<ul>
+<li><code>python3 -m pip install pandas</code>, or</li>
+<li><code>pip install pandas</code> for short,</li>
+</ul>
+<p>in the terminal to install Pandas</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="gp">$</span> pip install pandas
+</span></span><span class="line"><span class="cl"><span class="go">Collecting pandas
+</span></span></span><span class="line"><span class="cl"><span class="go">  Downloading pandas-2.3.1-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (91 kB)
+</span></span></span><span class="line"><span class="cl"><span class="go">Collecting numpy&gt;=1.26.0 (from pandas)
+</span></span></span><span class="line"><span class="cl"><span class="go">  Using cached numpy-2.3.1-cp313-cp313-manylinux_2_28_x86_64.whl.metadata (62 kB)
+</span></span></span><span class="line"><span class="cl"><span class="go">Collecting python-dateutil&gt;=2.8.2 (from pandas)
+</span></span></span><span class="line"><span class="cl"><span class="go">  Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+</span></span></span><span class="line"><span class="cl"><span class="go">Collecting pytz&gt;=2020.1 (from pandas)
+</span></span></span><span class="line"><span class="cl"><span class="go">  Using cached pytz-2025.2-py2.py3-none-any.whl.metadata (22 kB)
+</span></span></span><span class="line"><span class="cl"><span class="go">Collecting tzdata&gt;=2022.7 (from pandas)
+</span></span></span><span class="line"><span class="cl"><span class="go">  Using cached tzdata-2025.2-py2.py3-none-any.whl.metadata (1.4 kB)
+</span></span></span><span class="line"><span class="cl"><span class="go">Collecting six&gt;=1.5 (from python-dateutil&gt;=2.8.2-&gt;pandas)
+</span></span></span><span class="line"><span class="cl"><span class="go">  Using cached six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+</span></span></span><span class="line"><span class="cl"><span class="go">Downloading pandas-2.3.1-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.1 MB)
+</span></span></span><span class="line"><span class="cl"><span class="go">   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.1/12.1 MB 9.4 MB/s eta 0:00:00
+</span></span></span><span class="line"><span class="cl"><span class="go">Using cached numpy-2.3.1-cp313-cp313-manylinux_2_28_x86_64.whl (16.6 MB)
+</span></span></span><span class="line"><span class="cl"><span class="go">Using cached python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+</span></span></span><span class="line"><span class="cl"><span class="go">Using cached pytz-2025.2-py2.py3-none-any.whl (509 kB)
+</span></span></span><span class="line"><span class="cl"><span class="go">Using cached six-1.17.0-py2.py3-none-any.whl (11 kB)
+</span></span></span><span class="line"><span class="cl"><span class="go">Using cached tzdata-2025.2-py2.py3-none-any.whl (347 kB)
+</span></span></span><span class="line"><span class="cl"><span class="go">Installing collected packages: pytz, tzdata, six, numpy, python-dateutil, pandas
+</span></span></span><span class="line"><span class="cl"><span class="go">Successfully installed numpy-2.3.1 pandas-2.3.1 python-dateutil-2.9.0.post0 pytz-2025.2 six-1.17.0 tzdata-2025.2
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>If pip does not exist for some reason, you can run</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash-session" data-lang="bash-session"><span class="line"><span class="cl"><span class="gp">$</span> python3 -m ensurepip
+</span></span></code></pre></div><p>in the terminal to install it.</p>
+<p>People may also have <code>requirements.txt</code> files that lists all required packages. Simply run</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash-session" data-lang="bash-session"><span class="line"><span class="cl"><span class="gp">$</span> pip install -r requirements.txt
+</span></span></code></pre></div><p>and Pip will install the packages listed in requirements.txt</p>
+<h2 id="virtual-environments">Virtual Environments</h2>
+<p>There comes a time where you need to install a different version of a package for compatibility. To not break other projects in your computer, <a href="https://docs.python.org/3/library/venv.html">virtual environments</a> (venv) comes to the rescue by separating Python packages for each projects. To make one, simply run</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash-session" data-lang="bash-session"><span class="line"><span class="cl"><span class="gp">$</span> python -m venv name_of_venv
+</span></span></code></pre></div><p>to get into the venv, check one this table <a href="https://docs.python.org/3/library/venv.html#how-venvs-work">here</a>. I use this one since I&rsquo;m on Linux</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash-session" data-lang="bash-session"><span class="line"><span class="cl"><span class="gp">$</span> <span class="nb">source</span> name_of_venv/bin/activate
+</span></span></code></pre></div><p>There should be an indicator if you are currently inside a venv. To confirm, you can run this script as stated in the &ldquo;How venvs work&rdquo; section,</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="hl"><span class="lnt">7
+</span></span><span class="hl"><span class="lnt">8
+</span></span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash-session" data-lang="bash-session"><span class="line"><span class="cl"><span class="gp">$</span> python
+</span></span><span class="line"><span class="cl"><span class="go">Python 3.13.5 (main, Jun 21 2025, 15:00:31) [GCC 15.1.1 20250425] on linux
+</span></span></span><span class="line"><span class="cl"><span class="go">Type &#34;help&#34;, &#34;copyright&#34;, &#34;credits&#34; or &#34;license&#34; for more information.
+</span></span></span><span class="line"><span class="cl"><span class="go"></span><span class="gp">&gt;</span>&gt;&gt; import sys
+</span></span><span class="line"><span class="cl"><span class="gp">&gt;</span>&gt;&gt; sys.prefix
+</span></span><span class="line"><span class="cl"><span class="go">/path/to/your/venv/directory/python
+</span></span></span><span class="line hl"><span class="cl"><span class="go"></span><span class="gp">&gt;</span>&gt;&gt; sys.prefix !<span class="o">=</span> sys.base_prefix
+</span></span><span class="line hl"><span class="cl"><span class="go">true
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>and it should also use the venv&rsquo;s Pip,</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash-session" data-lang="bash-session"><span class="line"><span class="cl"><span class="gp">$</span> pip --version
+</span></span><span class="line"><span class="cl"><span class="go">/path/to/your/venv/directory/pip
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="writing-python-code">Writing Python code</h2>
+<p>There are two styles of writing Python code. One is writing to files ending in .py and the other is cells inside files ending in .ipynb.</p>
+<p>Starting with .py files, simply create one. For example create a file named &lsquo;hello_world.py&rsquo; and write</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="nb">print</span><span class="p">(</span><span class="s2">&#34;hello world&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>To run the program, open the terminal in the directory containing the file by either navigating to it manually or right clicking inside an explorer/finder/files app and select &ldquo;Open in terminal&rdquo;</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash-session" data-lang="bash-session"><span class="line"><span class="cl"><span class="gp">$</span> python hello_world.py
+</span></span><span class="line"><span class="cl"><span class="go">hello world
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>and there you have your first Python program!</p>
+<p>Next up is the .ipynb files. You could try installing Jupyter Lab on your own, or you can go <a href="https://jupyter.org/try">here</a> to try Jupyter Lab, or <a href="https://colab.research.google.com">Google Colab</a>.</p>
+<p><img src="/blog/python-getting-started/jupyterlab.png" alt="Jupyter Lab"></p>
+<h2 id="using-docker-advanced">Using Docker (advanced)</h2>
+<p><a href="https://www.docker.com/">Docker</a> is another application that can make &ldquo;containers&rdquo;. While venv still uses your device&rsquo;s operating system, containers can virtualize an operating system. This means that the Python applications will work on all device running docker which is extremely convenient.</p>
+<p>Simply select a version of Python from DockerHub and create a dockerfile.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-dockerfile" data-lang="dockerfile"><span class="line"><span class="cl"><span class="k">FROM</span><span class="s"> python:3.13.2-slim-bookworm</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">WORKDIR</span><span class="s"> /usr/src/app</span><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">RUN</span> pip install --no-cache-dir jupyterlab<span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err">
+</span></span></span><span class="line"><span class="cl"><span class="err"></span><span class="k">CMD</span> <span class="p">[</span> <span class="s2">&#34;jupyter&#34;</span><span class="p">,</span> <span class="s2">&#34;lab&#34;</span><span class="p">,</span> <span class="s2">&#34;--port&#34;</span><span class="p">,</span> <span class="s2">&#34;8889&#34;</span><span class="p">,</span> <span class="s2">&#34;--ip&#34;</span><span class="p">,</span> <span class="s2">&#34;0.0.0.0&#34;</span><span class="p">,</span> <span class="s2">&#34;--no-browser&#34;</span><span class="p">,</span> <span class="s2">&#34;--allow-root&#34;</span> <span class="p">]</span><span class="err">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>Then, simply build the image</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash-session" data-lang="bash-session"><span class="line"><span class="cl"><span class="gp">$</span> sudo docker build . -t name/app:latest
+</span></span></code></pre></div><p>run the image</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash-session" data-lang="bash-session"><span class="line"><span class="cl"><span class="gp">$</span> sudo docker run --rm -p <span class="s2">&#34;8889:8889&#34;</span> name/app:latest
+</span></span></code></pre></div><p>and you got yourself a jupyter lab running in Debian Linux!</p>
+<h2 id="whats-next">What&rsquo;s Next?</h2>
+<p>Now is just a matter on what to do.</p>
+<p>If you&rsquo;d like to indulge in some data science, you got the aformentioned Pandas for processing excel-like stuffs, <a href="https://numpy.org/">NumPy</a> to perform fast math operations, or <a href="https://scipy.org/">SciPy</a> for scientific computing, or plotting datas with <a href="https://plotly.com/python/">Plotly</a>, and many more to discover!</p>
+<p>Perhaps web development? <a href="https://www.djangoproject.com/">Django</a> is nice because it has batteries included! Everything you&rsquo;d need in a website is included, including but not limited to templating and authentication. But, it does not include HTML, CSS, JS knowledge though, those are at a bring on your own basis.</p>
+<p>Python is powerful because of the packages people have developed, make use of them!</p>
+
+
+			</main>
+			<nav id="TableOfContents">
+  <ul>
+    <li><a href="#installing-additional-packages">Installing additional packages</a></li>
+    <li><a href="#virtual-environments">Virtual Environments</a></li>
+    <li><a href="#writing-python-code">Writing Python code</a></li>
+    <li><a href="#using-docker-advanced">Using Docker (advanced)</a></li>
+    <li><a href="#whats-next">What&rsquo;s Next?</a></li>
+  </ul>
+</nav>
+			<nav id="blogs">
+				<ul>
+					<li>
+						<a href="/">Home</a>
+					</li>
+					
+					<li>
+						
+						
+						<a href="/blog/python-getting-started/">Python Getting Started</a>
+						<time datetime="2025-07-12T18:43:30&#43;07:00">July 12, 2025</time>
+					</li>
+					
+					<li>
+						
+						
+						<a href="/blog/string-simulation/">String Simulation</a>
+						<time datetime="2022-06-05T22:55:22&#43;07:00">June 5, 2022</time>
+					</li>
+					
+				</ul>
+			</nav>
+
+			<div id="footer">
+				<p>Copyright 2025. All rights reserved.</p>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

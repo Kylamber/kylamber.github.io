@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>I&#39;m Adrian, FYI</title>
-    <link>http://localhost:1313/</link>
-    <description>Recent content on I&#39;m Adrian, FYI</description>
+    <title>Python on I&#39;m Adrian, FYI</title>
+    <link>http://localhost:1313/tags/python/</link>
+    <description>Recent content in Python on I&#39;m Adrian, FYI</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 12 Jul 2025 18:43:30 +0700</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/tags/python/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Python Getting Started</title>
       <link>http://localhost:1313/blog/python-getting-started/</link>

@@ -1,7 +1,24 @@
+@font-face {
+	font-family: "FiraCode";
+	src: url("/fonts/FiraCode-VF.woff2") format("woff2 supports variations"),
+		 url("/fonts/FiraCode-VF.woff2") format("woff2-variations");
+	font-weight: 100 1000;
+}
+
 :root {
 	--checker-font-size: 1rem;
 	--checker-padding: 0.5rem;
 	--document-padding: 2rem;
+
+	--font-thin: 100;
+	--font-extralight: 200;
+	--font-light: 300;
+	--font-normal: 400;
+	--font-medium: 500;
+	--font-semibold: 600;
+	--font-bold: 700;
+	--font-extrabold: 800;
+	--font-black: 900;
 
 	--light-switch-icon: "🌙";
 	/* --light-switch-icon: "Dark"; */
@@ -15,7 +32,7 @@
 	--dark-text: #CCCCCC;
 	--dark-hyperlink: #66B2FF;
 	--dark-hyperlink-visited: #B19CD9;
-	--dark-bg: #222222;
+	--dark-bg: #212429;
 
 	--switch-icon: var(--light-switch-icon);
 	--text-color: var(--light-text);
@@ -60,6 +77,8 @@
 #theme-switcher-label:hover::before {
 	cursor: pointer;
 }
+
+/* https://bradleycarey.com/posts/hugo-theme-aware-syntax-highlighting/ */
 
 #theme-switcher:checked ~ #page {
 	--switch-icon: var(--dark-switch-icon);
@@ -147,7 +166,7 @@
 	z-index: 100;
 }
 
-#blogs:hover::before {
+#blogs-opener-label:hover::before {
 	cursor: pointer;
 }
 
@@ -166,6 +185,10 @@
 	border-width: 1px;
 	border-color: var(--text-color);
 	background: var(--bg-color);
+}
+
+#footer {
+	margin-top: auto;
 }
 
 .content {
@@ -209,6 +232,18 @@
   width: 100%;
 }
 
+/* Prevents copying for $ codes */
+.nocopy {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* Internet Explorer/Edge */
+    user-select: none;         /* Standard */
+}
+
+strong {
+	font-weight: var(--font-bold);
+}
+
 a:link {
 	color: var(--hyperlink-color);
 }
@@ -220,7 +255,7 @@ a:visited {
 body {
 	/* color: #222; */
 	margin: 0;
-	font-family: sans-serif;
+	font-family: "FiraCode", sans-serif;
 }
 
 img {

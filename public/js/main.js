@@ -14,8 +14,23 @@
       darkModeChecked = false;
     }
     checker.checked = darkModeChecked;
+    toggleSyntaxTheme(checker);
     checker.addEventListener("input", function() {
       localStorage.setItem("theme", checker.checked ? "dark" : "light");
     });
+    checker.addEventListener("input", () => {
+      toggleSyntaxTheme(checker);
+    });
   });
+  function toggleSyntaxTheme(checker) {
+    const darkSyntaxCSS = document.getElementById("syntax-dark");
+    const lightSyntaxCSS = document.getElementById("syntax-light");
+    if (checker.checked) {
+      darkSyntaxCSS.removeAttribute("disabled");
+      lightSyntaxCSS.setAttribute("disabled", "");
+    } else {
+      darkSyntaxCSS.setAttribute("disabled", "");
+      lightSyntaxCSS.removeAttribute("disabled");
+    }
+  }
 })();
