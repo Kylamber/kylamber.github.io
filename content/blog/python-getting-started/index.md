@@ -126,7 +126,7 @@ $ pip --version
 
 There are two styles of writing Python code. One is writing to files ending in .py and the other is cells inside files ending in .ipynb. 
 
-Starting with .py files, simply create one. For example create a file named 'hello_world.py' and using your preferred text editors such as Notepad, TextEditor, etc, write this
+Starting with .py files, simply create one. For example create a file named 'hello_world.py' and using your preferred text editors such as Notepad, TextEditor, VSCode, etc, write this
 
 ```python { lineNos=false }
 print("hello world")
