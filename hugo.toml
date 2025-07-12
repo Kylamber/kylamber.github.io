@@ -2,6 +2,7 @@ baseURL = 'https://imadrian.fyi/'
 languageCode = 'en-us'
 title = "I'm Adrian, FYI"
 theme = "better-default"
+enableGitInfo = true
 
 [caches]
   [caches.images]
@@ -24,3 +25,7 @@ theme = "better-default"
 
 [params]
   math = true
+
+[frontmatter]
+  lastmod = ["lastmod", ":git", "date", "publishDate"]
+

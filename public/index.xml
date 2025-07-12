@@ -2,25 +2,24 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>I&#39;m Adrian, FYI</title>
-    <link>http://localhost:1313/</link>
+    <link>https://imadrian.fyi/</link>
     <description>Recent content on I&#39;m Adrian, FYI</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 12 Jul 2025 18:43:30 +0700</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://imadrian.fyi/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Python Getting Started</title>
-      <link>http://localhost:1313/blog/python-getting-started/</link>
+      <link>https://imadrian.fyi/blog/python-getting-started/</link>
       <pubDate>Sat, 12 Jul 2025 18:43:30 +0700</pubDate>
-      <guid>http://localhost:1313/blog/python-getting-started/</guid>
+      <guid>https://imadrian.fyi/blog/python-getting-started/</guid>
       <description>&lt;p&gt;Python is a programming language. But not all computers can read Python. You&amp;rsquo;d first need to download Python from &lt;a href=&#34;https://www.python.org&#34;&gt;https://www.python.org&lt;/a&gt;. For guides on how to install Python, I&amp;rsquo;ll refer these videos for MacOS or Windows.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=C3bOxcILGu4&#34;&gt;Amit Thinks - How to install Python 3.13.0 on Windows 11&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=utVZYVJSTZA&#34;&gt;WittCode - How to Install Python on Mac&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;What&amp;rsquo;s important is that Python needs to be added to the PATH or Environment Variables. This enables you to access Python through Command Prompt/Terminal (I&amp;rsquo;ll use the term terminal to reference these because it&amp;rsquo;s shorter).&lt;/p&gt;</description>
     </item>
     <item>
       <title>String Simulation</title>
-      <link>http://localhost:1313/blog/string-simulation/</link>
+      <link>https://imadrian.fyi/blog/string-simulation/</link>
       <pubDate>Sun, 05 Jun 2022 22:55:22 +0700</pubDate>
-      <guid>http://localhost:1313/blog/string-simulation/</guid>
-      <description>&lt;p&gt;Say you have a load on a massless string placed somewhat like this.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/blog/string-simulation/diagram.png&#34; alt=&#34;String Free Body Diagram&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Fig 1. Displacements of three masses on a loaded string under tension T. Sourced from [1, p. 91].&lt;/p&gt;&#xA;&lt;p&gt;The differential equation for each load is&lt;/p&gt;&#xA;&lt;p&gt;\[ \ddot{y_r} = \frac{T}{ma}(y_{r-1}-2y_r+y_{r+1}) \]&lt;/p&gt;&#xA;&lt;p&gt;Where \( m \) is the mass of the load which is the same and \( a \) is the horizontal distance from each load [1, p. 91].&lt;/p&gt;</description>
+      <guid>https://imadrian.fyi/blog/string-simulation/</guid>
+      <description>&lt;p&gt;Say you have a load on a massless string placed somewhat like this.&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;https://imadrian.fyi/blog/string-simulation/diagram.png&#34; alt=&#34;String Free Body Diagram&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;Fig 1. Displacements of three masses on a loaded string under tension T. Sourced from [1, p. 91].&lt;/p&gt;&#xA;&lt;p&gt;The differential equation for each load is&lt;/p&gt;&#xA;&lt;p&gt;\[ \ddot{y_r} = \frac{T}{ma}(y_{r-1}-2y_r+y_{r+1}) \]&lt;/p&gt;&#xA;&lt;p&gt;Where \( m \) is the mass of the load which is the same and \( a \) is the horizontal distance from each load [1, p. 91].&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
