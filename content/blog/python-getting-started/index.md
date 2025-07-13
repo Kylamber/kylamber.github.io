@@ -179,7 +179,9 @@ and you got yourself a jupyter lab running in Debian Linux!
 
 Now is just a matter on what to do. 
 
-If you'd like to indulge in some data science, you got the aformentioned Pandas for processing excel-like stuffs, [NumPy](https://numpy.org/) to perform fast math operations, or [SciPy](https://scipy.org/) for scientific computing, or plotting datas with [Plotly](https://plotly.com/python/), and many more to discover!
+Are you new to programming and would like to know what you can do in Python? Check out [this](https://www.w3schools.com/python/python_getstarted.asp) guide by W3schools.
+
+If you'd like to indulge in some data science, you got the aformentioned Pandas for processing excel-like stuffs, [NumPy](https://numpy.org/) to perform fast math operations, [SciPy](https://scipy.org/) for scientific computing, or plotting datas with [Plotly](https://plotly.com/python/), and many more to discover!
 
 Perhaps web development? [Django](https://www.djangoproject.com/) is nice because it has batteries included! Everything you'd need in a website is included, including but not limited to templating and authentication. But, it does not include HTML, CSS, JS knowledge though, those are at a bring on your own basis. 
 
