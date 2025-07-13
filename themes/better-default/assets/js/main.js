@@ -17,27 +17,31 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	checker.checked = darkModeChecked;
-	toggleSyntaxTheme(checker);
+	toggleTheme(checker);
 
 	checker.addEventListener("input", function() {
 		localStorage.setItem("theme", checker.checked ? "dark" : "light" );
 	});
 
 	checker.addEventListener('input', () => {
-		toggleSyntaxTheme(checker);
+		toggleTheme(checker);
 	});
 });
 
-function toggleSyntaxTheme(checker) {
+function toggleTheme(checker) {
 	const darkSyntaxCSS = document.getElementById("syntax-dark");
 	const lightSyntaxCSS = document.getElementById("syntax-light");
 
 	if (checker.checked) {
 		darkSyntaxCSS.removeAttribute("disabled");
 		lightSyntaxCSS.setAttribute("disabled", "");
+		document.body.classList.add("dark");
+		document.body.classList.remove("light");
 	} else {
 		darkSyntaxCSS.setAttribute("disabled", "");
 		lightSyntaxCSS.removeAttribute("disabled");
+		document.body.classList.add("light");
+		document.body.classList.remove("dark");
 	}
 
 }

@@ -34,12 +34,6 @@
 	--dark-hyperlink-visited: #B19CD9;
 	--dark-bg: #212429;
 
-	--switch-icon: var(--light-switch-icon);
-	--text-color: var(--light-text);
-	--hyperlink-color: var(--light-hyperlink);
-	--hyperlink-visited-color: var(--light-hyperlink-visited);
-	--bg-color: var(--light-bg);
-
 	--toc-opened-icon: "📖";
 	/* --toc-opened-icon: "TOC"; */
 	--toc-closed-icon: "📕";
@@ -53,6 +47,34 @@
 	--blogs-closed-icon:"📁";
 	--blogs-opener-icon: var(--blogs-closed-icon);
 	--blogs-display: none;
+}
+
+body {
+	margin: 0;
+	font-family: "FiraCode", sans-serif;
+
+	background: var(--bg-color);
+	color: var(--text-color);
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	min-height: 100vh;
+}
+
+body.dark {
+	--switch-icon: var(--dark-switch-icon);
+	--text-color: var(--dark-text);
+	--bg-color: var(--dark-bg);
+	--hyperlink-color: var(--dark-hyperlink);
+	--hyperlink-visited-color: var(--dark-hyperlink-visited);
+}
+
+body.light {
+	--switch-icon: var(--light-switch-icon);
+	--text-color: var(--light-text);
+	--hyperlink-color: var(--light-hyperlink);
+	--hyperlink-visited-color: var(--light-hyperlink-visited);
+	--bg-color: var(--light-bg);
 }
 
 #theme-switcher {
@@ -76,25 +98,6 @@
 
 #theme-switcher-label:hover::before {
 	cursor: pointer;
-}
-
-/* https://bradleycarey.com/posts/hugo-theme-aware-syntax-highlighting/ */
-
-#theme-switcher:checked ~ #page {
-	--switch-icon: var(--dark-switch-icon);
-	--text-color: var(--dark-text);
-	--bg-color: var(--dark-bg);
-	--hyperlink-color: var(--dark-hyperlink);
-	--hyperlink-visited-color: var(--dark-hyperlink-visited);
-}
-
-#page {
-	background: var(--bg-color);
-	color: var(--text-color);
-	display: flex;
-	justify-content: center;
-	width: 100%;
-	min-height: 100vh;
 }
 
 #toc-opener {
@@ -232,12 +235,13 @@
   width: 100%;
 }
 
-/* Prevents copying for $ codes */
-.nocopy {
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none;    /* Firefox */
-    -ms-user-select: none;     /* Internet Explorer/Edge */
-    user-select: none;         /* Standard */
+/* https://nathan.rs/posts/fixing-ios-codeblocks/ */
+/* Fixes iOS font sizing anomaly */
+code {
+    text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
 }
 
 strong {
@@ -250,12 +254,6 @@ a:link {
 
 a:visited {
 	color: var(--hyperlink-visited-color);
-}
-
-body {
-	/* color: #222; */
-	margin: 0;
-	font-family: "FiraCode", sans-serif;
 }
 
 img {
