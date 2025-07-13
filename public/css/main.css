@@ -57,7 +57,7 @@ body {
 	color: var(--text-color);
 	display: flex;
 	justify-content: center;
-	width: 100%;
+	min-width: 0;
 	min-height: 100vh;
 }
 
@@ -110,7 +110,7 @@ body.light {
 	clip: rect(1px, 1px, 1px, 1px);
 }
 
-#toc-opener:checked ~ #page {
+#toc-opener:checked ~ .content {
 	--toc-display: var(--toc-display-block);
 	--toc-opener-icon: var(--toc-opened-icon);
 }
@@ -155,7 +155,7 @@ body.light {
 	clip: rect(1px, 1px, 1px, 1px);
 }
 
-#blogs-opener:checked ~ #page {
+#blogs-opener:checked ~ .content {
 	--blogs-display: block;
 	--blogs-opener-icon: var(--blogs-opened-icon);
 }

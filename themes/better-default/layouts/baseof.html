@@ -13,34 +13,32 @@
 	<input type="checkbox" id="toc-opener">
 	<input type="checkbox" id="blogs-opener">
 
-	<div id="page">
-		<div class="content"> 
-			<label for="theme-switcher" id="theme-switcher-label"></label>
-			<label for="toc-opener" id="toc-opener-label"></label>
-			<label for="blogs-opener" id="blogs-opener-label"></label>
-			<main>
-				{{ block "main" . }}{{ end }}
-			</main>
-			{{ .TableOfContents }}
-			<nav id="blogs">
-				<ul>
-					<li>
-						<a href="{{ .Site.Home.RelPermalink }}">Home</a>
-					</li>
-					{{ range .Site.RegularPages }}
-					<li>
-						{{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
-						{{ $dateHuman := .Date | time.Format ":date_long" }}
-						<a href="{{ .RelPermalink }}">{{ .Title }}</a>
-						<time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
-					</li>
-					{{ end }}
-				</ul>
-			</nav>
+	<div class="content"> 
+		<label for="theme-switcher" id="theme-switcher-label"></label>
+		<label for="toc-opener" id="toc-opener-label"></label>
+		<label for="blogs-opener" id="blogs-opener-label"></label>
+		<main>
+			{{ block "main" . }}{{ end }}
+		</main>
+		{{ .TableOfContents }}
+		<nav id="blogs">
+			<ul>
+				<li>
+					<a href="{{ .Site.Home.RelPermalink }}">Home</a>
+				</li>
+				{{ range .Site.RegularPages }}
+				<li>
+					{{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
+					{{ $dateHuman := .Date | time.Format ":date_long" }}
+					<a href="{{ .RelPermalink }}">{{ .Title }}</a>
+					<time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+				</li>
+				{{ end }}
+			</ul>
+		</nav>
 
-			<div id="footer">
-				{{ partial "footer.html" . }}
-			</div>
+		<div id="footer">
+			{{ partial "footer.html" . }}
 		</div>
 	</div>
 </body>
