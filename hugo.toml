@@ -10,7 +10,7 @@ enableGitInfo = true
 
 [markup]
   [markup.highlight]
-    lineNos = true
+    lineNos = false
     # style = 'gruvbox'
     # style = 'native'
     # style = 'evergarden'
