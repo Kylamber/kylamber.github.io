@@ -1,0 +1,15 @@
+{{/* https://discourse.gohugo.io/t/simple-pagination-for-hugo/36255 */}}
+{{ $n := .Paginator }}
+{{ if gt $n.TotalPages 1 }}
+	<nav id="pagination">
+	{{ if $n.HasPrev }}
+		<a href="{{ $n.Prev.URL }}">Prev</a>
+	{{ end }}
+		<span>
+			[Page {{ $n.PageNumber }} of {{ $n.TotalPages }}]
+		</span>
+	{{ if $n.HasNext }}
+		<a href="{{ $n.Next.URL }}">Next</a>
+	{{ end }}
+	</nav>
+{{ end }}

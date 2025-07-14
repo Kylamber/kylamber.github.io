@@ -1,0 +1,13 @@
+<div class="content-list">
+{{ range .Site.RegularPages | first 4 }}
+	<div>
+		{{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
+		{{ $dateHuman := .Date | time.Format ":date_long" }}
+		<strong><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></strong> - 
+		<time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+		<p>{{ .Content | plainify | strings.Truncate 100 }}</p>
+		{{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
+	</div>
+{{ end }}
+</div>
+

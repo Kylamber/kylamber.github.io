@@ -1,17 +1,10 @@
 :root {
-	--checker-font-size: 1rem;
+	--checker-font-size: 1.5rem;
 	--checker-padding: 0.5rem;
 	--document-padding: 2rem;
-
-	--font-thin: 100;
-	--font-extralight: 200;
-	--font-light: 300;
-	--font-normal: 400;
-	--font-medium: 500;
-	--font-semibold: 600;
-	--font-bold: 700;
-	--font-extrabold: 800;
-	--font-black: 900;
+	--content-list-vgap: 1rem;
+	--content-list-hgap: 1rem;
+	--header-items-gap: 1rem;
 
 	--light-switch-icon: "🌙";
 	/* --light-switch-icon: "Dark"; */
@@ -23,8 +16,8 @@
 	--dark-switch-icon: "☀️";
 	/* --dark-switch-icon: "Light"; */
 	--dark-text: #CCCCCC;
-	--dark-hyperlink: #66B2FF;
-	--dark-hyperlink-visited: #B19CD9;
+	--dark-hyperlink: #cae0a7;
+	--dark-hyperlink-visited: #79A688;
 	--dark-bg: #212429;
 
 	--toc-opened-icon: "📖";
@@ -43,7 +36,6 @@
 
 	font-family: Inter, sans-serif;
 	font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
-	font-size: 16px;
 }
 
 @supports (font-variation-settings: normal) {
@@ -52,7 +44,7 @@
 
 code { 
 	font-family: 'Fira Code', monospace; 
-	font-size: 14px;
+	font-size: 80%;
 	/* https://github.com/adityatelange/hugo-PaperMod/issues/828#issuecomment-1171994855 */
 	text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
@@ -72,22 +64,20 @@ body {
 	justify-content: center;
 	min-width: 0;
 	min-height: 100vh;
-}
 
-body.dark {
-	--switch-icon: var(--dark-switch-icon);
-	--text-color: var(--dark-text);
-	--bg-color: var(--dark-bg);
-	--hyperlink-color: var(--dark-hyperlink);
-	--hyperlink-visited-color: var(--dark-hyperlink-visited);
-}
-
-body.light {
 	--switch-icon: var(--light-switch-icon);
 	--text-color: var(--light-text);
 	--hyperlink-color: var(--light-hyperlink);
 	--hyperlink-visited-color: var(--light-hyperlink-visited);
 	--bg-color: var(--light-bg);
+}
+
+body:has(#theme-switcher:checked) {
+	--switch-icon: var(--dark-switch-icon);
+	--text-color: var(--dark-text);
+	--bg-color: var(--dark-bg);
+	--hyperlink-color: var(--dark-hyperlink);
+	--hyperlink-visited-color: var(--dark-hyperlink-visited);
 }
 
 #theme-switcher {
@@ -102,16 +92,37 @@ body.light {
 
 #theme-switcher-label::before {
 	content: var(--switch-icon);
-	position: fixed;
-	top: 5rem;
-	right: var(--checker-padding);
-	font-size: var(--checker-font-size);
 	z-index: 100;
 }
 
 #theme-switcher-label:hover::before {
 	cursor: pointer;
 }
+
+.space-between {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	gap: var(--header-items-gap);
+}
+
+@media (width >= 640px) {
+	.space-between {
+		gap: 0;
+	}
+}
+
+.space-between > div {
+	display: flex;
+	gap: var(--header-items-gap);
+}
+
+a {
+	vertical-align: center;
+}
+
 
 #toc-opener {
 	position: fixed;
@@ -123,7 +134,7 @@ body.light {
 	clip: rect(1px, 1px, 1px, 1px);
 }
 
-#toc-opener:checked ~ .content {
+body:has(#toc-opener:checked) {
 	--toc-display: var(--toc-display-block);
 	--toc-opener-icon: var(--toc-opened-icon);
 }
@@ -143,51 +154,6 @@ body.light {
 
 #TableOfContents {	
 	display: var(--toc-display);
-
-	position: fixed;
-	top: 0;
-	right: 0;
-	z-index: 5;
-	width: 60%;
-	min-height: 100vh;
-	padding-right: var(--document-padding);
-
-	border-style: solid;
-	border-width: 1px;
-	border-color: var(--text-color);
-	background: var(--bg-color);
-}
-
-#blogs-opener {
-	position: fixed;
-	bottom: 0;
-	right: 0;
-	height: 1px;
-	width: 1px;
-	overflow: hidden;
-	clip: rect(1px, 1px, 1px, 1px);
-}
-
-#blogs-opener:checked ~ .content {
-	--blogs-display: block;
-	--blogs-opener-icon: var(--blogs-opened-icon);
-}
-
-#blogs-opener-label::before {
-	content: var(--blogs-opener-icon);
-	position: fixed;
-	top: 3rem;
-	right: var(--checker-padding);
-	font-size: var(--checker-font-size);
-	z-index: 100;
-}
-
-#blogs-opener-label:hover::before {
-	cursor: pointer;
-}
-
-#blogs {	
-	display: var(--blogs-display);
 
 	position: fixed;
 	top: 0;
@@ -248,8 +214,18 @@ body.light {
   width: 100%;
 }
 
-strong {
-	font-weight: var(--font-bold);
+.content-list {
+	display: flex;
+	flex-direction: column;
+	gap: var(--content-list-vgap);
+}
+
+@media (width >= 640px) {
+	.content-list {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--content-list-hgap);
+	}
 }
 
 a:link {
