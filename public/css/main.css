@@ -1,10 +1,3 @@
-@font-face {
-	font-family: "FiraCode";
-	src: url("/fonts/FiraCode-VF.woff2") format("woff2 supports variations"),
-		 url("/fonts/FiraCode-VF.woff2") format("woff2-variations");
-	font-weight: 100 1000;
-}
-
 :root {
 	--checker-font-size: 1rem;
 	--checker-padding: 0.5rem;
@@ -47,12 +40,32 @@
 	--blogs-closed-icon:"📁";
 	--blogs-opener-icon: var(--blogs-closed-icon);
 	--blogs-display: none;
+
+	font-family: Inter, sans-serif;
+	font-feature-settings: 'liga' 1, 'calt' 1; /* fix for Chrome */
+	font-size: 16px;
+}
+
+@supports (font-variation-settings: normal) {
+  :root { font-family: InterVariable, sans-serif; }
+}
+
+code { 
+	font-family: 'Fira Code', monospace; 
+	font-size: 14px;
+	/* https://github.com/adityatelange/hugo-PaperMod/issues/828#issuecomment-1171994855 */
+	text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+@supports (font-variation-settings: normal) {
+  code { font-family: 'Fira Code VF', monospace; }
 }
 
 body {
 	margin: 0;
-	font-family: "FiraCode", sans-serif;
-
 	background: var(--bg-color);
 	color: var(--text-color);
 	display: flex;
@@ -233,15 +246,6 @@ body.light {
 /* https://github.com/alecthomas/chroma/issues/722 */
 .highlight .chroma .lntable .lntd + .lntd {
   width: 100%;
-}
-
-/* https://nathan.rs/posts/fixing-ios-codeblocks/ */
-/* Fixes iOS font sizing anomaly */
-code {
-    text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-    -moz-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
 }
 
 strong {
