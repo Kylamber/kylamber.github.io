@@ -15,7 +15,7 @@ For a given taxonomy, renders a list of terms assigned to the page.
 	<div>
 		<p>
 			{{ $label }}:
-			{{- range $idx, $element := . }}
+			{{- range $idx, $element := ( sort . "Title" ) }}
 				{{- if $idx }},{{ end }}
 				<a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
 			{{- end }}

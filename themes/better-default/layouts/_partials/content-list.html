@@ -8,7 +8,9 @@
 	<div>
 		<strong><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></strong> - 
 		<time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
-		{{ .Summary }}
+		<p>
+			{{ .Summary | plainify }}
+		</p>
 		{{ partial "terms.html" (dict "taxonomy" "tags" "page" .) }}
 	</div>
 {{ end }}
