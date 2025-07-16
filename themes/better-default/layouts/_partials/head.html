@@ -2,6 +2,14 @@
 <meta name="viewport" content="width=device-width">
 <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
 
+{{ if .Description }}
+	<meta name="description" content="{{ .Description }}">
+{{ else if .IsPage }}
+	<meta name="description" content="{{ .Summary | plainify }}">
+{{ else }}
+	<meta name="description" content="I'm Adrian, FYI! This is my blog/portfolio web. There's content around science and programming, mostly around physics or Python.">
+{{ end }}
+
 <link rel="preconnect" href="https://rsms.me/">
 <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css">
