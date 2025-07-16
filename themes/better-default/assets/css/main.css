@@ -45,6 +45,10 @@
 code { 
 	font-family: 'Fira Code', monospace; 
 	font-size: 80%;
+
+	font-variant-ligatures: none;
+	font-feature-settings: "liga" 0;
+
 	/* https://github.com/adityatelange/hugo-PaperMod/issues/828#issuecomment-1171994855 */
 	text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
@@ -52,9 +56,6 @@ code {
     -webkit-text-size-adjust: 100%;
 }
 
-@supports (font-variation-settings: normal) {
-  code { font-family: 'Fira Code VF', monospace; }
-}
 
 body {
 	margin: 0;
