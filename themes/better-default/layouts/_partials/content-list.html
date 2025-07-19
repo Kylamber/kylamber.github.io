@@ -6,8 +6,10 @@
 	{{ $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
 	{{ $dateHuman := .Date | time.Format ":date_long" }}
 	<div>
-		<strong><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></strong> - 
-		<time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+		<div style="display:flex;flex-direction:column;">			
+			<strong><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></strong> 
+			<time datetime="{{ $dateMachine }}">{{ $dateHuman }}</time>
+		</div>
 		<p>
 			{{ .Summary | plainify }}
 		</p>
@@ -17,4 +19,3 @@
 </div>
 
 {{ partial "paginator.html" . }}
-
