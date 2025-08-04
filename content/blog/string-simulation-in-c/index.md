@@ -2,19 +2,27 @@
 date: '2025-08-03T19:18:45+07:00'
 draft: false
 title: 'String Simulation in C'
+tags:
+    - 'C'
+    - 'Physics'
+    - 'Programming'
 ---
 
-Simulating string is one of my favourite things that I have done. This is the first time I simulated something outside the context of tasks and directly from a physics book. The full explanation about the algorithm used is available in another blog titled [String Simulation](/blog/string-simulation). This blog will focus on the Runge-Kutta part.
+Strings are one of my favourite things to simulate because they are the first thing I simulated outside the context of homework. The motivation comes from the idea of trying to understand something within a physics book through computation. The full explanation about the algorithm used is available in another blog titled [String Simulation](/blog/string-simulation). This blog focuses on implementing [Runge-Kutta](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods) (RK4) in C. In addition, since printing numbers alone are not enough, I will be using [raylib](https://raylib.com) to visualize the simulation.
 
-The equation that is going to be simulated is this:
+We are not going to simulate the wave equation, rather a set of mass that's in tension with their neighbours described with this equation:
 
 \[ \ddot{y_r} = \frac{T}{ma}(y_{r-1} - 2y_{r} + y_{r+1}) \]
 
-I will be using [raylib](https://raylib.com) for visualization which has been on my to-do for a while.
+which I have realized to be quite similar or maybe even the same as the wave equation when the spatial part is approximated:
 
-In my previous Python implementation, I conveniently used SciPy which has a built-in initial value problem solver that can use [Runge-Kutta](https://en.wikipedia.org/wiki/Runge%E2%80%93Kutta_methods). I have implemented RK4 manually in [this project](https://github.com/Kylamber/BSSN-BBH-Simulation), but it was behind many convenient abstractions that Python and the other libraries served. This mini project would serve as a good starting point to learn and get used to C.
+\[ \frac{d^2y}{dt^2} = \frac{1}{d^2}\frac{d^2y}{dx^2}. \]
 
-To start, I grabbed [this](https://www.raylib.com/examples/core/loader.html?name=core_3d_camera_free) 3D camera setup from raylib's examples: 
+In my previous Python implementation, I conveniently used SciPy which has a built-in initial value problem solver that implements RK4. I also have implemented RK4 by hand in [this project](https://github.com/Kylamber/BSSN-BBH-Simulation), but it was behind many convenient abstractions from Python and the other libraries. Implementing RK4 by hand in C would serve as a good introduction to C beyond hello world.
+
+## Raylib Setup
+
+To start, I grabbed [this](https://www.raylib.com/examples/core/loader.html?name=core_3d_camera_free) 3D camera setup from raylib's examples. I also modified the box so that it can be any number of box we want to display for our string's mass.
 
 ```c
 #include "raylib.h"
@@ -84,21 +92,20 @@ int main(){
 
     return 0;
 }
-
 ```
 
-This code also sets us with a row of cubes to visualize the string masses.
+## The Euler Method
 
-Now we can move on to the math. Starting simple, from the [Euler Method](https://en.wikipedia.org/wiki/Euler_method), I would rewrite the equation as such:
+Now we can move on to the math. We'll start simple by implementing the [Euler Method](https://en.wikipedia.org/wiki/Euler_method), I would write the equation like so:
 
 \[ 
 \begin{align*}
 \frac{d}{dt} y & = v \\
-\frac{d}{dt} v & = \frac{T}{ma}(y_{r-1} - 2y_{r} + y_{r+1}) \\
+\frac{d}{dt} v & = \frac{T}{ma}(y_{r-1} - 2y_{r} + y_{r+1}). \\
 \end{align*}
 \]
 
-this way, we can know the difference between the current position/velocity and the next position/velocity is given by:
+Through that, we can know the difference between the current position/velocity and the next position/velocity by calculating:
 
 \[ 
 \begin{align*}
@@ -107,12 +114,12 @@ dv & = \frac{T}{ma}(y_{r-1} - 2y_{r} + y_{r+1})\,dt \\
 \end{align*}
 \]
 
-and the next position/velocity is given by:
+and adding them to the current position/velocity to get the next position/velocity:
 
 \[
 \begin{align*}
 y_{t+1} & = y_{t} + dy \\
-v_{t+1} & = v_{t} + dv \\
+v_{t+1} & = v_{t} + dv. \\
 \end{align*}
 \]
 
@@ -121,15 +128,16 @@ In C, it would look something like this:
 ```c
 // dt is the simulation step,
 // nDots is the number of mass on the string,
-// y is an array of floats ordered as such: [y1, ydot1, y2, ydot2, ... yn, ydotn]
-// same with result.
+// y and result is an array of floats ordered as such: 
+// [y1, ydot1, y2, ydot2, ..., yn, ydotn]
+// dy is an array of floats ordered as such:
+// [ydot1, yddot1, ydot2, yddot2, ..., ydotn, yddotn]
 
 int evolveEuler(float dt, int nDots, float* result, float* y){
     float T = 1.0f;
     float m = 0.1f/(float)nDots;
     float a = 2.0f/(float)nDots;
 
-    // Store our d/dts here
     float* dy;
     dy = calloc( nDots * 2, sizeof(float) );
 
@@ -176,7 +184,11 @@ int main(){
 }
 ```
 
-We can then move on to Runge-Kutta. In the method, we have to compute these values
+By setting `current[2] = 2.0f` or in a sense "plucking" the string, we can get some kind of wave propagating. But the simulation will immediately go unstable. Hence, we'll need to use RK4.
+
+## Runge-Kutta (RK4)
+
+In this method, we have to compute these values
 
 \[
 \begin{align*}
@@ -196,13 +208,10 @@ t_{n+1} & = t_n + h.
 \end{align*}
 \]
 
-We can compute `k_1` the same as we did in the Euler Method. But for `k_2`, we would need to change the values of position/velocity used in the computation with \( y_n + h \frac{k_1}{2} \). Same goes with `k_3` and `k_4`.
+We can compute \(k_1\) the same as we did in the Euler Method. But for \(k_2\), we would need to change the values of position/velocity used in the computation with \( y_n + h \frac{k_1}{2} \). Same goes with \(k_3\) and \(k_4\) with their corresponding values.
 
 ```c
 int evolveRK4(float dt, int nDots, float* result, float* y){
-    // d^2/dt^2 y = -g
-    // d/dt y = v
-
     float T = 1.0f;
     float m = 0.1f/(float)nDots;
     float a = 2.0f/(float)nDots;
@@ -309,37 +318,36 @@ int evolveRK4(float dt, int nDots, float* result, float* y){
 }
 ```
 
-Replace `evolveEuler` with `evolveRK4` and we get a more stable string sim. I have also put gravity and damping inside the comment that can be enabled. But, the current implementation is still not perfect.
+With this, we can directly replace `evolveEuler` with `evolveRK4` and get a more stable simulation. I have also put gravity and damping in the comments that can be enabled for interesting interactions. But, the current implementation is still not good because we still haven't resolved the issue of the time step resolution. 
+
+We have been using `dt=1.0f/60.0f` which correlates to the FPS. In my testing, even with RK4, it's still not enough to have a stable simulation. If we lower it to `dt=1.0f/120.0f`, we can get finer time step resolution but the simulation will appear in slow motion. To mitigate this, we compute multiple steps of the simulation within one frame loop by doing something like this:
 
 ```c
-float dt = 1.0f/60.0f;
-evolveRK4(dt, nCubes, result, current);
-for (int i = 0; i < nCubes; i++){
-    cubes[i].y = result[i*2];
+int main(){
+    // ...
+    EndDrawing();
 
-    current[i*2] = result[i*2];
-    current[(2*i)+1] = result[(2*i)+1];
-}
-```
+    int slowDownFactor = 50;
+    for (int i = 0; i < slowDownFactor; i++){
+        float dt = 1.0f/60.0f;
+        evolveRK4(1.0f/60.0f/(float)slowDownFactor, nCubes, result, current);
+        for (int i = 0; i < nCubes; i++){
+            cubes[i].y = result[i*2];
 
-With this code, if we set dt lower, the simulation will be more precise but it will also play in slow motion. To mitigate this issue, we'll perform the calculation multiple times with a lower dt. 
-
-```c
-int slowDownFactor = 50;
-for (int i = 0; i < slowDownFactor; i++){
-    float dt = 1.0f/60.0f;
-    evolveRK4(1.0f/60.0f/(float)slowDownFactor, nCubes, result, current);
-    for (int i = 0; i < nCubes; i++){
-        cubes[i].y = result[i*2];
-
-        current[i*2] = result[i*2];
-        current[(2*i)+1] = result[(2*i)+1];
+            current[i*2] = result[i*2];
+            current[(2*i)+1] = result[(2*i)+1];
+        }
     }
+    // ...
 }
 ```
 
 With my laptop rocking an AMD Ryzen 5 4600H, I could get the `slownDownFactor` up to 50000 where it drops to 40 FPS, which is very surprising because of the number of loops inside the loop. Maybe I was stuck in Python for too long and just now tasting the power of a compiled language.
 
-Here's some result by setting `current[2] = 2.0f` at the initialization, increasing the number of cubes, and with damping.
+Here's some result by setting `current[2] = 2.0f` at the initialization, `slowDownFactor=100`, increasing the number of cubes, and with damping:
 
-{{< video src="/blog/string-simulation-in-c/result.mp4" >}}
+{{< video src="/blog/string-simulation-in-c/rk4.mp4" >}}
+
+Here's the Euler Method version:
+
+{{< video src="/blog/string-simulation-in-c/euler.mp4" >}}
