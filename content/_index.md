@@ -9,7 +9,7 @@ Here are some of my socials:
 - https://kylamber.itch.io/, a lil' bit of game dev/art;
 - https://medium.com/@adriani_31571, a lil' bit of blogging (going to port it over here soon).
 
-## Latest Blogs
+## Latest Content
 
 {{< latest-content >}}
 

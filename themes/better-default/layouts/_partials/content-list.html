@@ -1,4 +1,10 @@
 {{ $pages := site.RegularPages }}
+{{ if eq .Kind "home" }}
+{{ else if .IsSection }}
+	{{ $pages = .RegularPagesRecursive }}
+{{ end }}
+
+
 {{ $paginator := .Paginate $pages.ByDate.Reverse 8 }}
 
 <div class="content-list">

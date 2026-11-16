@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="description"
+      content="A drop-in browser widget that estimates knee angle and knee load from a phone or webcam."
+    />
+    <title>Knee Load — a drop-in pose widget</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://rsms.me/" />
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/firacode@6.2.0/distr/fira_code.css"
+    />
+    <link rel="stylesheet" href="./demo.css" />
+    <script>
+      // Match the site's stored preference first, then the OS. The check is
+      // shared with imadrian.fyi so the demo and blog stay in sync.
+      (function () {
+        var stored = null;
+        try {
+          stored = localStorage.getItem("theme");
+        } catch (err) {}
+        var dark =
+          stored === "dark" ||
+          (stored !== "light" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.dataset.theme = dark ? "dark" : "light";
+      })();
+    </script>
+  </head>
+  <body>
+    <input type="checkbox" id="theme-switcher" />
+    <div class="page">
+      <header class="top">
+        <a class="home" href="https://imadrian.fyi/">← imadrian.fyi</a>
+        <nav class="top-links" aria-label="Site">
+          <a href="https://imadrian.fyi/blog/">Blogs</a>
+          <label for="theme-switcher" id="theme-switcher-label">
+            <span class="sr-only">Toggle colour theme</span>
+          </label>
+        </nav>
+      </header>
+      <hr />
+
+      <main>
+        <p class="meta">pose → angles → physics</p>
+        <h1>Knee Load</h1>
+        <p class="lede">
+          A browser-only squat analyser. It tracks a side-on video, measures
+          knee flexion and estimates tibiofemoral compression in body weights —
+          no server, no upload, no app install. One
+          <code>&lt;div&gt;</code> and one script tag.
+        </p>
+        <p>
+          It reports knee flexion, knee compression, quadriceps force and the
+          shank moment arm, plus rolling charts, rep peaks and a CSV export.
+          Everything runs on the device; video never leaves the browser.
+        </p>
+
+        <h2>Drop it anywhere</h2>
+        <p>
+          The loader mounts a responsive iframe, so host styles cannot collide
+          with the widget.
+        </p>
+        <div class="snippet">
+          <button class="copy" id="copyBtn" type="button">Copy</button>
+          <pre id="snippet">&lt;div id="pose"&gt;&lt;/div&gt;
+&lt;script src="<span id="embedUrl">https://imadrian.fyi/pose-widget/embed.js</span>"&gt;&lt;/script&gt;</pre>
+        </div>
+
+        <div class="widget-shell">
+          <div id="pose"></div>
+        </div>
+        <p class="note">
+          Camera access requires HTTPS. For a live demo, use a laptop webcam or
+          a phone in landscape on a tripod, side-on with your whole body in
+          frame.
+        </p>
+
+        <h2>How it works</h2>
+        <ol class="steps">
+          <li>
+            <strong>Pose.</strong> MediaPipe BlazePose returns 33 landmarks. The
+            widget filters them and maps them onto the COCO-17 skeleton used by
+            the Python demo.
+          </li>
+          <li>
+            <strong>Calibrate.</strong> Your height gives pixels-per-metre
+            through anthropometric segment ratios. Stand tall for three
+            seconds; then the scale is locked.
+          </li>
+          <li>
+            <strong>Physics.</strong> Ground reaction × shank lever arm gives
+            knee torque. Divided by the patellar tendon arm, it gives
+            quadriceps and joint compression.
+          </li>
+        </ol>
+
+        <h2>What it reports</h2>
+        <ul>
+          <li>Knee flexion in degrees.</li>
+          <li>Knee compression in body weights and newtons.</li>
+          <li>Quadriceps force in body weights.</li>
+          <li>
+            Shank moment arm, vertical ground reaction force per leg and
+            whole-body COM acceleration.
+          </li>
+          <li>
+            Rolling 12-second charts, rep count, rep period and per-rep peak
+            load.
+          </li>
+        </ul>
+
+        <p>
+          The widget follows this page's light/dark toggle. An embed can force a
+          theme with <code>data-theme="light"</code> or
+          <code>data-theme="dark"</code>.
+        </p>
+      </main>
+
+      <footer class="footer">
+        <p>
+          Estimates for teaching and relative comparison. Not a force plate and
+          not medical advice. 2D side view only; external load is not modelled.
+        </p>
+        <p>Pose: MediaPipe BlazePose · physics ported from the Python demo.</p>
+      </footer>
+    </div>
+
+    <script>
+      var themeSwitcher = document.getElementById("theme-switcher");
+      if (themeSwitcher) {
+        themeSwitcher.checked =
+          document.documentElement.dataset.theme === "dark";
+        themeSwitcher.addEventListener("change", function () {
+          var next = themeSwitcher.checked ? "dark" : "light";
+          document.documentElement.dataset.theme = next;
+          try {
+            localStorage.setItem("theme", next);
+          } catch (err) {}
+        });
+      }
+
+      try {
+        document.getElementById("embedUrl").textContent = new URL(
+          "./embed.js",
+          location.href,
+        ).href;
+      } catch (err) {}
+
+      document
+        .getElementById("copyBtn")
+        .addEventListener("click", async function () {
+          var text = document.getElementById("snippet").textContent;
+          try {
+            await navigator.clipboard.writeText(text);
+            this.textContent = "Copied";
+            setTimeout(function () {
+              document.getElementById("copyBtn").textContent = "Copy";
+            }, 1400);
+          } catch (err) {
+            this.textContent = "Select + copy";
+          }
+        });
+    </script>
+    <script src="./embed.js"></script>
+  </body>
+</html>

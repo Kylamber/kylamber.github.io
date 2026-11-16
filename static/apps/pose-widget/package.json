@@ -1,0 +1,11 @@
+{
+  "name": "knee-load-widget",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Drop-in browser widget for pose-based knee angle and knee load analysis.",
+  "scripts": {
+    "test": "node --test tests/"
+  },
+  "license": "UNLICENSED"
+}

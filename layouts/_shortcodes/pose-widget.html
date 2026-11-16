@@ -1,0 +1,6 @@
+<div
+  data-pose
+  {{ with .Get "theme" }}data-theme="{{ . }}"{{ end }}
+  {{ with .Get "height" }}data-height="{{ . }}"{{ end }}
+></div>
+<script src="{{ "apps/pose-widget/embed.js" | relURL }}"></script>
